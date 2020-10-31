@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Assessment2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="SignInViewController" customModule="Assessment2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,8 +30,9 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m2e-Kh-hpc">
                                 <rect key="frame" x="30" y="195" width="354" height="28.666666666666657"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tgr-Xd-edT">
                                 <rect key="frame" x="30" y="253.66666666666663" width="354" height="18"/>
@@ -41,8 +42,9 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="miI-WE-HSk">
                                 <rect key="frame" x="30" y="291.66666666666669" width="354" height="28.333333333333314"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bb-6O-AWL">
                                 <rect key="frame" x="30" y="340" width="354" height="32"/>
@@ -53,7 +55,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="doX-ha-cZ1" kind="presentation" animates="NO" modalPresentationStyle="fullScreen" id="Peb-sE-oZs"/>
+                                    <action selector="loginToAccount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZV6-xq-QyY"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WlC-vE-ehB">
@@ -70,6 +72,7 @@
                                     <color key="titleShadowColor" red="0.18828965540000001" green="0.90564281089999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
+                                    <action selector="registerAccount:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UF7-mm-ijQ"/>
                                     <segue destination="2O2-Xc-Mrm" kind="presentation" animates="NO" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="ed8-IN-cAq"/>
                                 </connections>
                             </button>
@@ -102,26 +105,31 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="hJW-hK-rPW"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="m2e-Kh-hpc" id="BGK-Kh-MI8"/>
+                        <outlet property="passwordTextField" destination="miI-WE-HSk" id="g6H-tu-3jL"/>
+                        <segue destination="doX-ha-cZ1" kind="presentation" identifier="loginSegue" animates="NO" modalPresentationStyle="fullScreen" id="YsG-Lv-s8N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-800.00000000000011" y="892.66304347826099"/>
         </scene>
-        <!--Item 2-->
+        <!--Games-->
         <scene sceneID="7AS-nO-hB4">
             <objects>
-                <viewController id="akp-Nt-UZ7" sceneMemberID="viewController">
+                <viewController title="Games" id="akp-Nt-UZ7" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="umk-1K-aCF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="fco-XT-zEE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="8wB-cm-Xd3"/>
+                    <tabBarItem key="tabBarItem" title="Games" id="8wB-cm-Xd3"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Zk-DC-3Ry" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-767" y="2228"/>
+            <point key="canvasLocation" x="390" y="2396"/>
         </scene>
         <!--Home-->
         <scene sceneID="pCM-Ms-fVx">
@@ -137,7 +145,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Tu-Ms-met" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-767" y="1618"/>
+            <point key="canvasLocation" x="391" y="1701"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wJM-er-OWf">
@@ -180,8 +188,9 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WKE-Pq-6Az">
                                 <rect key="frame" x="30" y="194.33333333333334" width="354" height="28.666666666666657"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="email"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FmB-Kw-HQK">
                                 <rect key="frame" x="30" y="253" width="354" height="18"/>
@@ -191,8 +200,9 @@
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gmB-UI-Y67">
                                 <rect key="frame" x="30" y="291" width="354" height="28.333333333333314"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Btv-ou-gpc">
                                 <rect key="frame" x="30" y="339.33333333333331" width="354" height="32"/>
