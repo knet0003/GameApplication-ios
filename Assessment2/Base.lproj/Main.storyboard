@@ -3,6 +3,7 @@
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -138,14 +139,60 @@
                     <view key="view" contentMode="scaleToFill" id="Gvi-PW-V0w">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome back," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nSx-OI-IDI">
+                                <rect key="frame" x="20" y="74" width="198" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" systemColor="systemGray6Color"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Top played games:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6v4-Ek-EZL">
+                                <rect key="frame" x="20" y="170" width="143" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGray6Color"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fcj-yt-qQm">
+                                <rect key="frame" x="20" y="199" width="374" height="366"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="sectionIndexColor" systemColor="systemGreenColor"/>
+                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="sectionIndexTrackingBackgroundColor" systemColor="systemGreenColor"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1n-vh-eGY">
+                                <rect key="frame" x="20" y="585" width="374" height="30"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                <state key="normal" title="Join a game!">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="jJG-lu-d9Z"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" systemColor="systemGreenColor"/>
+                        <constraints>
+                            <constraint firstItem="fcj-yt-qQm" firstAttribute="leading" secondItem="jJG-lu-d9Z" secondAttribute="leading" constant="20" id="53H-RF-W4d"/>
+                            <constraint firstItem="nSx-OI-IDI" firstAttribute="leading" secondItem="jJG-lu-d9Z" secondAttribute="leading" constant="20" id="Aug-tX-Jnt"/>
+                            <constraint firstItem="a1n-vh-eGY" firstAttribute="leading" secondItem="jJG-lu-d9Z" secondAttribute="leading" constant="20" id="BJ7-27-b93"/>
+                            <constraint firstItem="6v4-Ek-EZL" firstAttribute="top" secondItem="nSx-OI-IDI" secondAttribute="bottom" constant="60" id="DOg-KJ-n1J"/>
+                            <constraint firstItem="fcj-yt-qQm" firstAttribute="top" secondItem="6v4-Ek-EZL" secondAttribute="bottom" constant="8" id="Rfc-rI-Fnt"/>
+                            <constraint firstItem="a1n-vh-eGY" firstAttribute="top" secondItem="fcj-yt-qQm" secondAttribute="bottom" constant="20" id="UAT-X9-duh"/>
+                            <constraint firstItem="6v4-Ek-EZL" firstAttribute="leading" secondItem="jJG-lu-d9Z" secondAttribute="leading" constant="20" id="elb-cF-Cg2"/>
+                            <constraint firstItem="jJG-lu-d9Z" firstAttribute="bottom" secondItem="a1n-vh-eGY" secondAttribute="bottom" constant="72" id="gf2-lR-e7n"/>
+                            <constraint firstItem="nSx-OI-IDI" firstAttribute="top" secondItem="jJG-lu-d9Z" secondAttribute="top" constant="30" id="lbw-hT-Mdg"/>
+                            <constraint firstItem="jJG-lu-d9Z" firstAttribute="trailing" secondItem="fcj-yt-qQm" secondAttribute="trailing" constant="20" id="qdv-Fp-NO5"/>
+                            <constraint firstItem="jJG-lu-d9Z" firstAttribute="trailing" secondItem="a1n-vh-eGY" secondAttribute="trailing" constant="20" id="w9R-QH-ult"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" id="2kg-oS-eQg"/>
+                    <navigationItem key="navigationItem" title="Home" id="VJu-IR-ZH8">
+                        <barButtonItem key="rightBarButtonItem" image="gearshape" catalog="system" id="7Tq-ua-8vT">
+                            <color key="tintColor" systemColor="systemGreenColor"/>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Tu-Ms-met" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="391" y="1701"/>
+            <point key="canvasLocation" x="1297.1014492753625" y="1700.5434782608697"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wJM-er-OWf">
@@ -155,10 +202,13 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="YMJ-r4-qse">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" systemColor="systemGreenColor"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="selectedImageTintColor" systemColor="systemGreenColor"/>
                     </tabBar>
                     <connections>
-                        <segue destination="93B-yh-o9W" kind="relationship" relationship="viewControllers" id="H1O-rh-P3Z"/>
+                        <segue destination="gZj-gg-2Wc" kind="relationship" relationship="viewControllers" id="H1O-rh-P3Z"/>
                         <segue destination="akp-Nt-UZ7" kind="relationship" relationship="viewControllers" id="b8g-h7-V7S"/>
                     </connections>
                 </tabBarController>
@@ -264,10 +314,48 @@
             </objects>
             <point key="canvasLocation" x="157.97101449275362" y="892.66304347826099"/>
         </scene>
+        <!--Home-->
+        <scene sceneID="Ibv-6r-ReC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gZj-gg-2Wc" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" selectedImage="homekit" catalog="system" id="2kg-oS-eQg">
+                        <imageReference key="image" image="homekit" catalog="system" symbolScale="large"/>
+                        <color key="badgeColor" systemColor="systemGreenColor"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TXx-bw-aA5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" systemColor="systemGreenColor"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" systemColor="systemGreenColor"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="93B-yh-o9W" kind="relationship" relationship="rootViewController" id="o1r-ja-ChF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nbk-l2-TbQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="389.85507246376812" y="1700.5434782608697"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="gearshape" catalog="system" width="128" height="121"/>
+        <image name="homekit" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
