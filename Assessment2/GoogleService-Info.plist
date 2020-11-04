@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1070235491809-ellg7vr02ddsoitr6rddkv4s9rctmk0r.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1070235491809-ellg7vr02ddsoitr6rddkv4s9rctmk0r</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAInERCtIWzRXUIdwfDQ1ck-SDSRnyOgDY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1070235491809</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.monash.assessment3</string>
+	<key>PROJECT_ID</key>
+	<string>fit5140ass3chayanviki</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fit5140ass3chayanviki.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1070235491809:ios:862bccaced53a5d4a8c6a0</string>
+	<key>DATABASE_URL</key>
+	<string>https://fit5140ass3chayanviki.firebaseio.com</string>
+</dict>
+</plist>
