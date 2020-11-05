@@ -8,9 +8,14 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import MapKit
 
 class ProfileViewController: UIViewController {
     
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var ageLabel: UILabel!
+    @IBOutlet weak var locationMapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
         

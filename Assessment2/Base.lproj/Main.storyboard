@@ -114,7 +114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-800.00000000000011" y="892.66304347826099"/>
+            <point key="canvasLocation" x="-1761" y="2453"/>
         </scene>
         <!--Messages-->
         <scene sceneID="eQD-9Y-Cbl">
@@ -162,7 +162,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qfh-ih-dUl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2010.144927536232" y="3125.54347826087"/>
+            <point key="canvasLocation" x="1438" y="3263"/>
         </scene>
         <!--Chat Messages View Controller-->
         <scene sceneID="iqk-98-Rc0">
@@ -178,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lRo-sc-KGd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2851" y="3126"/>
+            <point key="canvasLocation" x="2375" y="3263"/>
         </scene>
         <!--Notifications-->
         <scene sceneID="lx3-wN-GZM">
@@ -196,12 +196,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kvM-TP-mE2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="374" y="3885"/>
+            <point key="canvasLocation" x="390" y="4069"/>
         </scene>
         <!--Home-->
         <scene sceneID="pCM-Ms-fVx">
             <objects>
-                <viewController title="Home" id="93B-yh-o9W" sceneMemberID="viewController">
+                <viewController title="Home" id="93B-yh-o9W" customClass="HomeViewController" customModule="Assessment2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gvi-PW-V0w">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -265,7 +265,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Tu-Ms-met" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1297.1014492753625" y="1700.5434782608697"/>
+            <point key="canvasLocation" x="1480" y="1701"/>
         </scene>
         <!--Profile-->
         <scene sceneID="zaI-7n-eHh">
@@ -362,17 +362,21 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="ageLabel" destination="9ac-4e-zyZ" id="11P-VY-vUg"/>
+                        <outlet property="emailLabel" destination="VSn-eN-Qjh" id="UuN-aQ-tNj"/>
+                        <outlet property="locationMapView" destination="hbU-n5-w2T" id="oww-YH-3Hd"/>
+                        <outlet property="nameLabel" destination="VRE-94-p4U" id="1jX-8x-AiJ"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="logoutSegue" animates="NO" modalPresentationStyle="overFullScreen" id="9cv-9b-YWn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hZE-ij-Vkm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2142.0289855072465" y="1036.9565217391305"/>
+            <point key="canvasLocation" x="-462" y="933"/>
         </scene>
         <!--Games-->
         <scene sceneID="d22-fB-jKZ">
             <objects>
-                <tableViewController id="vYZ-vZ-xaA" sceneMemberID="viewController">
+                <tableViewController id="vYZ-vZ-xaA" customClass="GamesTableViewController" customModule="Assessment2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mdn-wN-pNN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -381,7 +385,7 @@
                         <color key="separatorColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="130" id="eMG-8w-3Z5">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="130" id="eMG-8w-3Z5" customClass="GamesTableViewCell" customModule="Assessment2" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eMG-8w-3Z5" id="CCl-Qk-uGk">
@@ -435,6 +439,13 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="distanceLabel" destination="ner-0U-Sbj" id="dEa-gd-3Ot"/>
+                                    <outlet property="gameImage" destination="oAr-aD-RUg" id="gaI-lG-eWN"/>
+                                    <outlet property="gameNameLabel" destination="VHF-b3-Rjk" id="DRT-5s-0gW"/>
+                                    <outlet property="playersNeededLabel" destination="UoL-Wm-irN" id="sxd-Jv-Hc9"/>
+                                    <outlet property="sessionTimeLabel" destination="y9x-ek-JHG" id="qjZ-qK-ELq"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -446,12 +457,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xsK-Hr-aCl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2128.985507246377" y="1700.5434782608697"/>
+            <point key="canvasLocation" x="2374" y="1701"/>
         </scene>
         <!--Games-->
         <scene sceneID="Xif-Ie-z1p">
             <objects>
-                <viewController id="aPf-bB-7n4" sceneMemberID="viewController">
+                <viewController id="aPf-bB-7n4" customClass="GameInfoViewController" customModule="Assessment2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xM7-Ca-Jso">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -530,6 +541,9 @@
                                 <color key="backgroundColor" red="0.18828965540000001" green="0.90564281089999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Join Game"/>
+                                <connections>
+                                    <action selector="JoinGame:" destination="aPf-bB-7n4" eventType="touchUpInside" id="lJh-rf-EaU"/>
+                                </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ezf-nv-bwa">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
@@ -586,10 +600,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Games" id="X6n-Ia-Yud"/>
+                    <connections>
+                        <outlet property="gameNameLabel" destination="s6g-vO-JO1" id="V4H-Qk-EcH"/>
+                        <outlet property="gameOwnerLabel" destination="68R-nO-2Wg" id="SCP-wv-gM4"/>
+                        <outlet property="locationMapView" destination="HjO-a0-V9C" id="ahg-zZ-31D"/>
+                        <outlet property="playersLabel" destination="Ltl-KL-zrL" id="p16-gV-3fu"/>
+                        <outlet property="sessionNameLabel" destination="gjq-AR-EpM" id="CQS-qw-gWc"/>
+                        <outlet property="sessionTimeLabel" destination="zcM-Qg-bUK" id="EfE-4N-j0C"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KNg-Ga-s2l" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2965" y="1688"/>
+            <point key="canvasLocation" x="3219" y="1701"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wJM-er-OWf">
@@ -613,7 +635,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Zg-3W-N9d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1659" y="1921"/>
+            <point key="canvasLocation" x="-762" y="2453"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="EeL-gZ-25R">
@@ -711,7 +733,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCb-VQ-PfY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="157.97101449275362" y="892.66304347826099"/>
+            <point key="canvasLocation" x="-2735" y="2453"/>
         </scene>
         <!--Home-->
         <scene sceneID="Ibv-6r-ReC">
@@ -749,7 +771,7 @@
         <!--My Games-->
         <scene sceneID="Kil-L4-NQd">
             <objects>
-                <tableViewController id="eRD-Em-uci" sceneMemberID="viewController">
+                <tableViewController id="eRD-Em-uci" customClass="MyGamesTableViewController" customModule="Assessment2" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="CDn-Mv-5PB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -830,7 +852,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RzZ-7w-5e1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2242.0289855072465" y="2395.9239130434785"/>
+            <point key="canvasLocation" x="1439" y="2453"/>
         </scene>
         <!--My Games-->
         <scene sceneID="Ghj-G3-5rz">
@@ -856,7 +878,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uHP-gL-f4Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1334.7826086956522" y="2395.9239130434785"/>
+            <point key="canvasLocation" x="390" y="2453"/>
         </scene>
         <!--Games-->
         <scene sceneID="2Fg-zX-quI">
@@ -999,12 +1021,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Eb2-EZ-s4v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3297" y="2378"/>
+            <point key="canvasLocation" x="3220" y="2453"/>
         </scene>
         <!--Add Game-->
         <scene sceneID="3NP-r8-j1m">
             <objects>
-                <viewController id="VSm-1B-wjT" sceneMemberID="viewController">
+                <viewController id="VSm-1B-wjT" customClass="AddGameViewController" customModule="Assessment2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ak4-cc-GPD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1082,6 +1104,9 @@
                                 <color key="backgroundColor" red="0.18828965540000001" green="0.90564281089999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveGame:" destination="VSm-1B-wjT" eventType="touchUpInside" id="SXc-g5-03q"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bRQ-Cb-bWV"/>
@@ -1123,10 +1148,19 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add Game" id="rQx-w3-A8b"/>
+                    <connections>
+                        <outlet property="GameNameTextField" destination="WKo-gX-zj9" id="ZMf-Sz-1Zr"/>
+                        <outlet property="PlayersNeededStepper" destination="ruS-dU-ciP" id="dD7-05-g4J"/>
+                        <outlet property="SessionNameTextField" destination="4DU-9d-7tQ" id="GVN-vN-zbO"/>
+                        <outlet property="locationMapView" destination="2I1-BY-xY0" id="1SK-vh-wLK"/>
+                        <outlet property="playersNeededLabel" destination="Iuv-zc-n1H" id="c5T-iy-MKD"/>
+                        <outlet property="saveButton" destination="YW5-en-ZAg" id="Lik-wA-ry2"/>
+                        <outlet property="sessionTimeView" destination="fhv-Vn-TKk" id="uaM-X8-Lre"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D6O-3m-fNP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4202.898550724638" y="3104.347826086957"/>
+            <point key="canvasLocation" x="2374" y="2453"/>
         </scene>
         <!--Messages-->
         <scene sceneID="cPe-3e-UjF">
@@ -1150,7 +1184,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JxI-dn-dJk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1102.8985507246377" y="3125.54347826087"/>
+            <point key="canvasLocation" x="390" y="3264"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
