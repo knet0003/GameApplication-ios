@@ -10,6 +10,7 @@ pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Firestore'
 pod 'FirebaseFirestoreSwift'
+pod 'MessageKit'
 
   target 'Assessment2Tests' do
     inherit! :search_paths
