@@ -42,13 +42,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="miI-WE-HSk">
-                                <rect key="frame" x="30" y="291.66666666666669" width="354" height="28.333333333333314"/>
+                                <rect key="frame" x="30" y="291.66666666666669" width="354" height="27"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" textContentType="password"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3bb-6O-AWL">
-                                <rect key="frame" x="30" y="340" width="354" height="32"/>
+                                <rect key="frame" x="30" y="338.66666666666669" width="354" height="32"/>
                                 <color key="backgroundColor" red="0.1882896553693722" green="0.90564281088082899" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -60,13 +60,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot password?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WlC-vE-ehB">
-                                <rect key="frame" x="30" y="392" width="174.66666666666666" height="21"/>
+                                <rect key="frame" x="30" y="390.66666666666669" width="174.66666666666666" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vLB-io-lJq">
-                                <rect key="frame" x="209.66666666666663" y="392" width="174.33333333333337" height="30"/>
+                                <rect key="frame" x="209.66666666666663" y="390.66666666666669" width="174.33333333333337" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <state key="normal" title="Register">
                                     <color key="titleColor" red="0.18828965540000001" green="0.90564281089999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -637,10 +637,10 @@
             </objects>
             <point key="canvasLocation" x="-762" y="2453"/>
         </scene>
-        <!--View Controller-->
+        <!--Register View Controller-->
         <scene sceneID="EeL-gZ-25R">
             <objects>
-                <viewController id="2O2-Xc-Mrm" sceneMemberID="viewController">
+                <viewController id="2O2-Xc-Mrm" customClass="RegisterViewController" customModule="Assessment2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oUa-22-hmu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -723,7 +723,7 @@
                                         </connections>
                                     </button>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="jOc-ee-7lx">
-                                        <rect key="frame" x="20" y="394" width="374" height="216"/>
+                                        <rect key="frame" x="20" y="393.66666666666669" width="374" height="216.00000000000006"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </datePicker>
@@ -792,10 +792,16 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pEf-9o-IBU"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="WKE-Pq-6Az" id="t59-F4-HHD"/>
+                        <outlet property="passwordTextField" destination="gmB-UI-Y67" id="gyV-lx-aLY"/>
+                        <outlet property="registerButton" destination="Btv-ou-gpc" id="VtC-aQ-8KC"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="signinSegue" animates="NO" modalPresentationStyle="fullScreen" id="ysF-7z-2no"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zCb-VQ-PfY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2735" y="2453"/>
+            <point key="canvasLocation" x="-2736.231884057971" y="2452.989130434783"/>
         </scene>
         <!--Home-->
         <scene sceneID="Ibv-6r-ReC">
@@ -1250,7 +1256,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9cv-9b-YWn"/>
+        <segue reference="ysF-7z-2no"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>

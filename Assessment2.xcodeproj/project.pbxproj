@@ -20,6 +20,7 @@
 		38988A312553CE9E000FFF8C /* MyGamesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38988A302553CE9E000FFF8C /* MyGamesTableViewController.swift */; };
 		38988A362553CEE0000FFF8C /* AddGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38988A352553CEE0000FFF8C /* AddGameViewController.swift */; };
 		38988A3B2553D0D8000FFF8C /* GamesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38988A3A2553D0D8000FFF8C /* GamesTableViewCell.swift */; };
+		38988A432553F6ED000FFF8C /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38988A422553F6ED000FFF8C /* RegisterViewController.swift */; };
 		38EECDFF2542BC3F00381C12 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EECDFE2542BC3F00381C12 /* AppDelegate.swift */; };
 		38EECE012542BC3F00381C12 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EECE002542BC3F00381C12 /* SceneDelegate.swift */; };
 		38EECE032542BC3F00381C12 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EECE022542BC3F00381C12 /* ViewController.swift */; };
@@ -67,6 +68,7 @@
 		38988A302553CE9E000FFF8C /* MyGamesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGamesTableViewController.swift; sourceTree = "<group>"; };
 		38988A352553CEE0000FFF8C /* AddGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGameViewController.swift; sourceTree = "<group>"; };
 		38988A3A2553D0D8000FFF8C /* GamesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamesTableViewCell.swift; sourceTree = "<group>"; };
+		38988A422553F6ED000FFF8C /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		38EECDFB2542BC3F00381C12 /* Assessment2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assessment2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		38EECDFE2542BC3F00381C12 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		38EECE002542BC3F00381C12 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				38988A302553CE9E000FFF8C /* MyGamesTableViewController.swift */,
 				38988A352553CEE0000FFF8C /* AddGameViewController.swift */,
 				38988A3A2553D0D8000FFF8C /* GamesTableViewCell.swift */,
+				38988A422553F6ED000FFF8C /* RegisterViewController.swift */,
 			);
 			path = Assessment2;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				38EECDFF2542BC3F00381C12 /* AppDelegate.swift in Sources */,
 				388EB45F2553C89700B1FE3E /* GameInfoViewController.swift in Sources */,
 				388EB4502552E4D000B1FE3E /* ProfileViewController.swift in Sources */,
+				38988A432553F6ED000FFF8C /* RegisterViewController.swift in Sources */,
 				388EB4412552BB9800B1FE3E /* ChannelMessage.swift in Sources */,
 				38EECE3A254D485900381C12 /* SignInViewController.swift in Sources */,
 				38988A312553CE9E000FFF8C /* MyGamesTableViewController.swift in Sources */,
