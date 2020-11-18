@@ -57,10 +57,12 @@ class SignInViewController: UIViewController {
             if let error = error {
                 self.displayErrorMessage(error.localizedDescription)
             }
+            else{
             self.currentSender = Sender(id: user!.user.uid, name: "Viki")
             UserDefaults.standard.set(user!.user.uid, forKey: "Uid")
             UserDefaults.standard.set("Viki", forKey: "Name")
             UserDefaults.standard.synchronize()
+            }
             
         }
     }
