@@ -20,6 +20,10 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
                                                             if user != nil {
+                                                                self.currentSender = Sender(id: user!.uid, name: "Viki")
+                                                                UserDefaults.standard.set(user!.uid, forKey: "Uid")
+                                                                UserDefaults.standard.set("Viki", forKey: "Name")
+                                                                UserDefaults.standard.synchronize()
                                                                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
                                                             }})
         
@@ -27,28 +31,15 @@ class SignInViewController: UIViewController {
     }
     
     @IBAction func registerAccount(_ sender: Any) {
-        guard let password = passwordTextField.text else {
-            displayErrorMessage("Please enter a password")
-            return
-        }
-        guard let email = emailTextField.text else {
-            displayErrorMessage("Please enter an email address")
-            return
-        }
         
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
-            if let error = error {
-                self.displayErrorMessage(error.localizedDescription)
-            }
-        }
     }
     
     @IBAction func loginToAccount(_ sender: Any) {
-        guard let password = passwordTextField.text else {
+        guard let password = passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
             displayErrorMessage("Please enter a password")
             return
         }
-        guard let email = emailTextField.text else {
+        guard let email = emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) else {
             displayErrorMessage("Please enter an email address")
             return
         }
@@ -56,11 +47,9 @@ class SignInViewController: UIViewController {
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if let error = error {
                 self.displayErrorMessage(error.localizedDescription)
+            } else {
+            
             }
-            self.currentSender = Sender(id: user!.user.uid, name: "Viki")
-            UserDefaults.standard.set(user!.user.uid, forKey: "Uid")
-            UserDefaults.standard.set("Viki", forKey: "Name")
-            UserDefaults.standard.synchronize()
             
         }
     }
