@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class GameSession: NSObject, Decodable {
+class GameSession: NSObject, Codable {
     var id: String?
     var gamename: String?
     var sessionname: String?
@@ -26,6 +26,5 @@ class GameSession: NSObject, Decodable {
         case latitude
         case longitude
         case sessiontime
-        
      }
 }
