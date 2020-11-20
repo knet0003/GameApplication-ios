@@ -92,9 +92,9 @@ class ChatMessagesViewController: MessagesViewController, MessagesDataSource,
     // MARK: - Messages Data Source
     func currentSender() -> SenderType {
         guard let sender = sender else {
-            return Sender(id: "",name: "")
+            return Sender(id: "",name: "") as! SenderType
         }
-        return sender
+        return sender as! SenderType
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView:

@@ -4,6 +4,7 @@
 //
 //  Created by Net Keovechchta on 2020/11/20.
 //
+import CoreLocation
 
 enum DatabaseChange {
  case add
@@ -22,7 +23,7 @@ protocol DatabaseListener: AnyObject {
 }
 protocol DatabaseProtocol: AnyObject {
  func cleanup()
-    func addGameSession(game: String, sessionname: String, playersneeded: Int, location: CLLocationCoordinates, sessiontime: Date) -> GameSession
+    func addGameSession(game: String, sessionname: String, playersneeded: Int, latitude:String, longitude: String, sessiontime: Date) -> GameSession
 // func addUser(userName: String) -> User
 // func addUserToGame(user: User, gameSession: GameSession) -> Bool
  func deleteGameSession(gamesession: GameSession)
