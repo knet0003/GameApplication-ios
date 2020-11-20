@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		04B119A8438EB37276C7FEC2 /* Pods_Assessment2_Assessment2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2619EAE687705B43B3BE50 /* Pods_Assessment2_Assessment2UITests.framework */; };
-		3805AD7225676ACE008981E2 /* Datepicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3805AD7125676ACE008981E2 /* Datepicker.swift */; };
 		3805AD8125678270008981E2 /* GameSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3805AD8025678270008981E2 /* GameSession.swift */; };
 		3805BDBC25678B8200EC658C /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3805BDBB25678B8200EC658C /* FirebaseController.swift */; };
 		3805BDC125678BDD00EC658C /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3805BDC025678BDD00EC658C /* MulticastDelegate.swift */; };
@@ -61,7 +60,6 @@
 /* Begin PBXFileReference section */
 		167ED863903479B5DAAE1B28 /* Pods-Assessment2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Assessment2Tests.release.xcconfig"; path = "Target Support Files/Pods-Assessment2Tests/Pods-Assessment2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		2B638C5D435F4A6EBA744E62 /* Pods-Assessment2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Assessment2.release.xcconfig"; path = "Target Support Files/Pods-Assessment2/Pods-Assessment2.release.xcconfig"; sourceTree = "<group>"; };
-		3805AD7125676ACE008981E2 /* Datepicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Datepicker.swift; sourceTree = "<group>"; };
 		3805AD8025678270008981E2 /* GameSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSession.swift; sourceTree = "<group>"; };
 		3805BDBB25678B8200EC658C /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		3805BDC025678BDD00EC658C /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 				38988A352553CEE0000FFF8C /* AddGameViewController.swift */,
 				38988A3A2553D0D8000FFF8C /* GamesTableViewCell.swift */,
 				38988A422553F6ED000FFF8C /* RegisterViewController.swift */,
-				3805AD7125676ACE008981E2 /* Datepicker.swift */,
 				3805AD8025678270008981E2 /* GameSession.swift */,
 			);
 			path = Assessment2;
@@ -483,7 +480,6 @@
 				38988A3B2553D0D8000FFF8C /* GamesTableViewCell.swift in Sources */,
 				3805AD8125678270008981E2 /* GameSession.swift in Sources */,
 				388EB43C2552B8E800B1FE3E /* Sender.swift in Sources */,
-				3805AD7225676ACE008981E2 /* Datepicker.swift in Sources */,
 				388EB44B2552BDC000B1FE3E /* ChatMessagesViewController.swift in Sources */,
 				388EB4372552B86700B1FE3E /* Channel.swift in Sources */,
 				38EECE032542BC3F00381C12 /* ViewController.swift in Sources */,
