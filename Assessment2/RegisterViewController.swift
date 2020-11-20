@@ -14,18 +14,27 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     
-    @IBOutlet weak var showPassImage: UIImageView!
-    var iconClick = true
+//    @IBOutlet weak var showPassImage: UIImageView!
+//    var iconClick = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let tapGesture = UITapGestureRecognizer(target: self, action: Selector(("imageTapped:")))
-
-            // add it to the image view;
-        showPassImage.addGestureRecognizer(tapGesture)
-            // make sure imageView can be interacted with by user
-        showPassImage.isUserInteractionEnabled = true
+//        let tapGesture = UITapGestureRecognizer(target: self, action: Selector(("imageTapped:")))
+//
+//            // add it to the image view;
+//        showPassImage.addGestureRecognizer(tapGesture)
+//            // make sure imageView can be interacted with by user
+//        showPassImage.isUserInteractionEnabled = true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     
