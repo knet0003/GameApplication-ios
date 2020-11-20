@@ -12,6 +12,22 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class FirebaseController: NSObject, DatabaseProtocol {
+    func cleanup() {
+        <#code#>
+    }
+    
+    func deleteGameSession(gamesession: GameSession) {
+        <#code#>
+    }
+    
+    func addListener(listener: DatabaseListener) {
+        <#code#>
+    }
+    
+    func removeListener(listener: DatabaseListener) {
+        <#code#>
+    }
+    
     var listeners = MulticastDelegate<DatabaseListener>()
      var authController: Auth
      var database: Firestore

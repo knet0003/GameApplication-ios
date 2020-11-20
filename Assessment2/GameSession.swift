@@ -13,7 +13,8 @@ class GameSession: NSObject, Decodable {
     var gamename: String?
     var sessionname: String?
     var playersneeded: Int?
-    var location: CLLocationCoordinate2D?
+    var latitude: String?
+    var longitude: String?
     var sessiontime: Date?
     
 
@@ -22,7 +23,8 @@ class GameSession: NSObject, Decodable {
         case gamename
         case sessionname
         case playersneeded
-        case location
+        case latitude
+        case longitude
         case sessiontime
         
      }
