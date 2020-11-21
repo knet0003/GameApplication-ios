@@ -6,6 +6,8 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>The application uses location information</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We use your location.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

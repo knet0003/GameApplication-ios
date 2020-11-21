@@ -35,6 +35,10 @@
 		38EECE192542BC4000381C12 /* Assessment2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EECE182542BC4000381C12 /* Assessment2Tests.swift */; };
 		38EECE242542BC4000381C12 /* Assessment2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EECE232542BC4000381C12 /* Assessment2UITests.swift */; };
 		38EECE3A254D485900381C12 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EECE39254D485900381C12 /* SignInViewController.swift */; };
+		38FC3F062567D1A3007D6B4E /* SelectGameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC3F052567D1A3007D6B4E /* SelectGameTableViewController.swift */; };
+		38FC3F0B2567D8FA007D6B4E /* GameData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC3F0A2567D8FA007D6B4E /* GameData.swift */; };
+		38FC3F102567DD3D007D6B4E /* VolumeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC3F0F2567DD3D007D6B4E /* VolumeData.swift */; };
+		38FC3F152567E12F007D6B4E /* SelectGameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FC3F142567E12F007D6B4E /* SelectGameTableViewCell.swift */; };
 		51C89DBB992E22D11A97FBCD /* Pods_Assessment2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB74E0571678DB097053A22 /* Pods_Assessment2Tests.framework */; };
 		58D5629025656688008A636B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 58D5628F25656688008A636B /* GoogleService-Info.plist */; };
 		94FA1AE519C0A370CD769FC9 /* Pods_Assessment2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E83AA27E854B0D6B0995AD75 /* Pods_Assessment2.framework */; };
@@ -93,6 +97,10 @@
 		38EECE232542BC4000381C12 /* Assessment2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assessment2UITests.swift; sourceTree = "<group>"; };
 		38EECE252542BC4000381C12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38EECE39254D485900381C12 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		38FC3F052567D1A3007D6B4E /* SelectGameTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGameTableViewController.swift; sourceTree = "<group>"; };
+		38FC3F0A2567D8FA007D6B4E /* GameData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameData.swift; sourceTree = "<group>"; };
+		38FC3F0F2567DD3D007D6B4E /* VolumeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeData.swift; sourceTree = "<group>"; };
+		38FC3F142567E12F007D6B4E /* SelectGameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGameTableViewCell.swift; sourceTree = "<group>"; };
 		4A2619EAE687705B43B3BE50 /* Pods_Assessment2_Assessment2UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Assessment2_Assessment2UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F885345F4CD655965C5976 /* Pods-Assessment2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Assessment2Tests.debug.xcconfig"; path = "Target Support Files/Pods-Assessment2Tests/Pods-Assessment2Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		58D5628F25656688008A636B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -177,9 +185,6 @@
 				58D5628F25656688008A636B /* GoogleService-Info.plist */,
 				38EECE072542BC3F00381C12 /* Assessment2.xcdatamodeld */,
 				38EECE39254D485900381C12 /* SignInViewController.swift */,
-				388EB4362552B86700B1FE3E /* Channel.swift */,
-				388EB43B2552B8E800B1FE3E /* Sender.swift */,
-				388EB4402552BB9800B1FE3E /* ChannelMessage.swift */,
 				388EB4452552BD4500B1FE3E /* MessageTableViewController.swift */,
 				388EB44A2552BDC000B1FE3E /* ChatMessagesViewController.swift */,
 				388EB44F2552E4D000B1FE3E /* ProfileViewController.swift */,
@@ -190,7 +195,14 @@
 				38988A352553CEE0000FFF8C /* AddGameViewController.swift */,
 				38988A3A2553D0D8000FFF8C /* GamesTableViewCell.swift */,
 				38988A422553F6ED000FFF8C /* RegisterViewController.swift */,
+				38FC3F052567D1A3007D6B4E /* SelectGameTableViewController.swift */,
+				38FC3F142567E12F007D6B4E /* SelectGameTableViewCell.swift */,
+				388EB4362552B86700B1FE3E /* Channel.swift */,
+				388EB4402552BB9800B1FE3E /* ChannelMessage.swift */,
+				388EB43B2552B8E800B1FE3E /* Sender.swift */,
+				38FC3F0A2567D8FA007D6B4E /* GameData.swift */,
 				3805AD8025678270008981E2 /* GameSession.swift */,
+				38FC3F0F2567DD3D007D6B4E /* VolumeData.swift */,
 			);
 			path = Assessment2;
 			sourceTree = "<group>";
@@ -487,14 +499,18 @@
 				388EB45F2553C89700B1FE3E /* GameInfoViewController.swift in Sources */,
 				388EB4502552E4D000B1FE3E /* ProfileViewController.swift in Sources */,
 				38988A432553F6ED000FFF8C /* RegisterViewController.swift in Sources */,
+				38FC3F062567D1A3007D6B4E /* SelectGameTableViewController.swift in Sources */,
+				38FC3F0B2567D8FA007D6B4E /* GameData.swift in Sources */,
 				388EB4412552BB9800B1FE3E /* ChannelMessage.swift in Sources */,
 				38EECE3A254D485900381C12 /* SignInViewController.swift in Sources */,
 				38988A312553CE9E000FFF8C /* MyGamesTableViewController.swift in Sources */,
 				3805BDBC25678B8200EC658C /* FirebaseController.swift in Sources */,
 				38988A362553CEE0000FFF8C /* AddGameViewController.swift in Sources */,
 				388EB4462552BD4500B1FE3E /* MessageTableViewController.swift in Sources */,
+				38FC3F102567DD3D007D6B4E /* VolumeData.swift in Sources */,
 				38EECE012542BC3F00381C12 /* SceneDelegate.swift in Sources */,
 				3805BDC125678BDD00EC658C /* MulticastDelegate.swift in Sources */,
+				38FC3F152567E12F007D6B4E /* SelectGameTableViewCell.swift in Sources */,
 				388EB4642553C9A600B1FE3E /* GamesTableViewController.swift in Sources */,
 				388EB4552553C10800B1FE3E /* HomeViewController.swift in Sources */,
 			);

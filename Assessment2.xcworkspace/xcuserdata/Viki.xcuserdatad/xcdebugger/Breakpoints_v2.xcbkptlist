@@ -34,5 +34,271 @@
             endingLineNumber = "31">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "62D7BA3C-4C48-435E-85A2-093607B49F74"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/GameData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "GameData"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "62D7BA3C-4C48-435E-85A2-093607B49F74 - a06135ffbdf988ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.GameData.name.getter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/GameData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "139">
+               </Location>
+               <Location
+                  uuid = "62D7BA3C-4C48-435E-85A2-093607B49F74 - cb1613dcf34238f2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.GameData.name.setter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/GameData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "174">
+               </Location>
+               <Location
+                  uuid = "62D7BA3C-4C48-435E-85A2-093607B49F74 - 87d526b10be12d7c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.GameData.name.modify : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/GameData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "62D7BA3C-4C48-435E-85A2-093607B49F74 - 7172ed7d55260a71"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.GameData.name.modify : Swift.Optional&lt;Swift.String&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/GameData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "13D86634-42EA-470F-9E81-9E1873A2BD3C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/VolumeData.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "VolumeData"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "13D86634-42EA-470F-9E81-9E1873A2BD3C - a7cafddaaa0e2def"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.VolumeData.games.getter : Swift.Optional&lt;Swift.Array&lt;Assessment2.GameData&gt;&gt;"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/VolumeData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "122">
+               </Location>
+               <Location
+                  uuid = "13D86634-42EA-470F-9E81-9E1873A2BD3C - 38b6cbf74b7b51fb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.VolumeData.games.setter : Swift.Optional&lt;Swift.Array&lt;Assessment2.GameData&gt;&gt;"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/VolumeData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "148">
+               </Location>
+               <Location
+                  uuid = "13D86634-42EA-470F-9E81-9E1873A2BD3C - a7a67382cce4977f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.VolumeData.games.modify : Swift.Optional&lt;Swift.Array&lt;Assessment2.GameData&gt;&gt;"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/VolumeData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "18">
+               </Location>
+               <Location
+                  uuid = "13D86634-42EA-470F-9E81-9E1873A2BD3C - 9a29d287ce9633c9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.VolumeData.games.modify : Swift.Optional&lt;Swift.Array&lt;Assessment2.GameData&gt;&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/VolumeData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "13D86634-42EA-470F-9E81-9E1873A2BD3C - 5be82d34bff1318c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.VolumeData.init() -&gt; Assessment2.VolumeData"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/VolumeData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "47">
+               </Location>
+               <Location
+                  uuid = "13D86634-42EA-470F-9E81-9E1873A2BD3C - cfdfe076928c4b6c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.VolumeData.init(from: Swift.Decoder) throws -&gt; Assessment2.VolumeData"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/VolumeData.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "204">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "29E44DF9-5594-454E-8968-C4AF20AB7D7B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/SelectGameTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "requestGames(gameName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "29E44DF9-5594-454E-8968-C4AF20AB7D7B - 4d47fb2a13bba897"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Assessment2.SelectGameTableViewController.requestGames(gameName: Swift.String) -&gt; ()"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/SelectGameTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "109"
+                  endingLineNumber = "109"
+                  offsetFromSymbolStart = "394">
+               </Location>
+               <Location
+                  uuid = "29E44DF9-5594-454E-8968-C4AF20AB7D7B - d5ec401a8cfbb8b4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Assessment2.SelectGameTableViewController.requestGames(gameName: Swift.String) -&gt; ()"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/SelectGameTableViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "110"
+                  endingLineNumber = "110"
+                  offsetFromSymbolStart = "22">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "20787DA4-534D-40D6-B625-0238BD8439B4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/SelectGameTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
+            landmarkName = "requestGames(gameName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3D0091AC-B5F0-48D3-BBAC-51A609C35D09"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/SelectGameTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
+            landmarkName = "requestGames(gameName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
