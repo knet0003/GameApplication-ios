@@ -21,7 +21,15 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let database = Firestore.firestore()
+        let settings = database.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        settings.isPersistenceEnabled = true
+        database.settings = settings
         var name: String?
+        var email: String?
+        var dob: Timestamp?
+        var lat: Double?
+        var long: Double?
         channelsRef = database.collection("users")
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
                                                             if user != nil {
@@ -32,8 +40,16 @@ class SignInViewController: UIViewController {
                                                                                 for document in querySnapshot!.documents {
                                                                                     name = document.get("Name") as! String
                                                                                     self.currentSender = Sender(id: user!.uid, name: name!)
+                                                                                    email = user!.email
+                                                                                    dob = document.get("DoB") as! Timestamp
+                                                                                    lat = document.get("Lat") as! Double
+                                                                                    long = document.get("Long") as! Double
                                                                                     UserDefaults.standard.set(user!.uid, forKey: "Uid")
                                                                                     UserDefaults.standard.set(name, forKey: "Name")
+                                                                                    UserDefaults.standard.set(email, forKey: "Email")
+                                                                                    UserDefaults.standard.set(lat, forKey: "Lat")
+                                                                                    UserDefaults.standard.set(long, forKey: "Long")
+                                                                                    UserDefaults.standard.set(dob?.dateValue(), forKey: "Dob")
                                                                                     UserDefaults.standard.synchronize()
                                                                                     self.performSegue(withIdentifier: "loginSegue", sender: nil)
                                                                                 }
