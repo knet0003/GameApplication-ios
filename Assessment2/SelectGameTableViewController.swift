@@ -8,7 +8,7 @@
 import UIKit
 
 
-protocol GameDelegate: NSObject {
+protocol AddGameDelegate: NSObject {
     func onGameAdded(selectedGame: GameData)
 }
 
@@ -23,7 +23,7 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
     var imageURLs: [String] = []
     var images: [UIImage] = []
     
-    weak var delegate: GameDelegate?
+    weak var delegate: AddGameDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,8 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
     override func tableView(_ tableView: UITableView, didSelectRowAt
         indexPath: IndexPath) {
         let game = apiGames[indexPath.row]
-        delegate?.onGameAdded(selectedGame: game)
+        print(game.imageURL)
+        let _ = delegate?.onGameAdded(selectedGame: game)
         navigationController?.popViewController(animated: true)
     }
 
@@ -90,7 +91,6 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
         currentRequestPage = 0;
         
         requestGames(gameName: searchText)
-       // downloadImage()
     }
     
     // MARK: - Web Request

@@ -14,7 +14,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import Firebase
 
-class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, GameDelegate, UITextFieldDelegate, DatabaseListener {
+class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, AddGameDelegate, UITextFieldDelegate, DatabaseListener {
     var listenerType: ListenerType = .all
     
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
@@ -43,11 +43,13 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     
     @IBOutlet weak var saveButton: UIButton!
     
-    var selectedGame: String?
+    var selectedGameName: String?
+    var selectedGameImage: String?
+    
     weak var databaseController: DatabaseProtocol?
     
     let annotation = MKPointAnnotation()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locationManager.delegate = self
@@ -60,7 +62,8 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         self.locationMapView.userTrackingMode = .follow
         locationMapView.delegate = self
         let longtap = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotationOnLongPress(gesture:)))
-        longtap.minimumPressDuration = 1.0
+        longtap.minimumPressDuration = 0.6
+        gameNameLabel.text = " "
         locationMapView.addGestureRecognizer(longtap)
         sessionDatepicker.minimumDate = Date()
         
@@ -81,6 +84,10 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
      locationManager.stopUpdatingLocation()
      }
     
+    override func didReceiveMemoryWarning() {
+             super.didReceiveMemoryWarning()
+             // Dispose of any resources that can be recreated.
+           }
     
 
         // Do any additional setup after loading the view.
@@ -119,13 +126,17 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     */
     
     @IBAction func saveGame(_ sender: Any) {
-        guard let gamename = gameNameLabel.text else{
+        if (self.gameNameLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || self.gameNameLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines) == nil){
             displayMessage(title: "Empty details", message: "Please select a game you want to play first")
             return
         }
-        guard let sessionname = sessionNameTextField.text else {
+        let gamename = gameNameLabel.text
+        var sessionname: String
+        if (self.sessionNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || self.sessionNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == nil) {
             displayMessage(title: "Empty details", message: "Please add a session name first")
             return
+        } else {
+            sessionname = self.sessionNameTextField.text!
         }
         let sessionTime = sessionDatepicker.date
         
@@ -133,26 +144,43 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
             displayMessage(title: "Not logged in", message: "Please log in first to create a new game session")
              return
         }
+        
+        guard let playersneeded = playersNeededLabel.text else {
+            displayMessage(title: "No player number", message: "Please add how many players you need")
+             return
+        }
         let latitude = annotation.coordinate.latitude
         let longitude = annotation.coordinate.longitude
-        let playersneeded = Int(playersNeededLabel.text!)!
+        if longitude != 0 && longitude != 0 {
+        } else {
+            displayMessage(title: "No location selected", message: "Please select a session location from the map")
+             return
+        }
+        guard let gameimage = selectedGameImage else {
+             return
+        }
         let db = Firestore.firestore()
         var ref = db.collection("games").addDocument(data: [
                                                                "Game name": gamename,
                                                                "Session name": sessionname,
                                                                "Lat": latitude as Double,
                                                                "Long": longitude as Double,
-                                                        "Players needed": playersneeded as Int,
+                                                        "Players needed": playersneeded,
                                                         "Session Time": sessionTime,
-                                                               "Owner": user])
-        
+                                                               "Owner": user,
+                                                     "Game Image": gameimage ])
+        displayMessage(title: "Session Added", message: "You successfully created a session!")
+        sessionNameTextField.text?.removeAll()
+        gameNameLabel.text = "  "
+        locationMapView.removeAnnotation(annotation)
     }
     
     // MARK - GameDelegate methods
     
     func onGameAdded(selectedGame: GameData) {
-        self.selectedGame = selectedGame.name
-        gameNameLabel.text = self.selectedGame
+        self.selectedGameName = selectedGame.name
+        self.selectedGameImage = selectedGame.imageURL
+        gameNameLabel.text = self.selectedGameName
     }
     
     
@@ -165,7 +193,7 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         self.present(alertController, animated: true, completion: nil)
     }
     
-    // MARK UITextfield deleage function
+    // MARK UITextfield delegate function
     func textFieldDidBeginEditing(_ textField: UITextField) {
            // setDefaultStyleForFormElements()
         }
@@ -174,6 +202,13 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
            textField.resignFirstResponder()
            return true
        }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+              if segue.identifier == "searchGame" {
+                  let destination = segue.destination as! SelectGameTableViewController
+                  destination.delegate = self
+              }
+          }
 
     
 }

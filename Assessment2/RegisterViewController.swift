@@ -45,7 +45,8 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         }
         nameTextField.delegate = self
         emailTextField.delegate = self
-        passwordTextField.delegate = self
+    //    passwordTextField.delegate = self
+        DoBDatePicker.maximumDate = Date()
         // Do any additional setup after loading the view.
 //        let tapGesture = UITapGestureRecognizer(target: self, action: Selector(("imageTapped:")))
 //
