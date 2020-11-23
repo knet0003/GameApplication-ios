@@ -67,7 +67,6 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
     override func tableView(_ tableView: UITableView, didSelectRowAt
         indexPath: IndexPath) {
         let game = apiGames[indexPath.row]
-        print(game.imageURL)
         let _ = delegate?.onGameAdded(selectedGame: game)
         navigationController?.popViewController(animated: true)
     }

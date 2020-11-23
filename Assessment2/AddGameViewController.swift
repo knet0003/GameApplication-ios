@@ -86,11 +86,7 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     
     override func didReceiveMemoryWarning() {
              super.didReceiveMemoryWarning()
-             // Dispose of any resources that can be recreated.
            }
-    
-
-        // Do any additional setup after loading the view.
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
@@ -126,17 +122,19 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     */
     
     @IBAction func saveGame(_ sender: Any) {
-        if (self.gameNameLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || self.gameNameLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines) == nil){
+        var gamename: String
+        if let text = self.gameNameLabel.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
+            gamename = text
+        } else {
             displayMessage(title: "Empty details", message: "Please select a game you want to play first")
             return
         }
-        let gamename = gameNameLabel.text
         var sessionname: String
-        if (self.sessionNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || self.sessionNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == nil) {
+        if let text = self.sessionNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
+            sessionname = text
+        } else {
             displayMessage(title: "Empty details", message: "Please add a session name first")
             return
-        } else {
-            sessionname = self.sessionNameTextField.text!
         }
         let sessionTime = sessionDatepicker.date
         
@@ -172,6 +170,8 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         displayMessage(title: "Session Added", message: "You successfully created a session!")
         sessionNameTextField.text?.removeAll()
         gameNameLabel.text = "  "
+        playersNeededLabel.text = "1"
+        sessionDatepicker.date = Date()
         locationMapView.removeAnnotation(annotation)
     }
     
@@ -195,7 +195,7 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     
     // MARK UITextfield delegate function
     func textFieldDidBeginEditing(_ textField: UITextField) {
-           // setDefaultStyleForFormElements()
+          //  setDefaultStyleForFormElements()
         }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

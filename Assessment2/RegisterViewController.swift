@@ -45,7 +45,7 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         }
         nameTextField.delegate = self
         emailTextField.delegate = self
-    //    passwordTextField.delegate = self
+        passwordTextField.delegate = self
         DoBDatePicker.maximumDate = Date()
         // Do any additional setup after loading the view.
 //        let tapGesture = UITapGestureRecognizer(target: self, action: Selector(("imageTapped:")))
@@ -138,8 +138,8 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             else{
                 let db = Firestore.firestore()
-                var ref: DocumentReference? = nil
-                ref = db.collection("users").addDocument(data: [
+               // var ref: DocumentReference? = nil
+                db.collection("users").document(user!.user.uid).setData([
                                                             "Name": name,
                                                             "DoB": Dob,
                                                             "Lat": self.currentLocation!.latitude as Double,
