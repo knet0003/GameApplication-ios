@@ -15,6 +15,10 @@ import FirebaseFirestore
 import Firebase
 
 class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, AddGameDelegate, UITextFieldDelegate, DatabaseListener {
+    func onUserChange(change: DatabaseChange, gamePlayers: [User]) {
+        
+    }
+    
     var listenerType: ListenerType = .all
     
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
@@ -29,7 +33,7 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     @IBOutlet weak var sessionDatepicker: UIDatePicker!
     
     @IBAction func playersNeededStepper(_ sender: UIStepper) {
-        playersNeededLabel.text = String(sender.value)
+        playersNeededLabel.text = String(Int(sender.value))
     }
     
     @IBOutlet weak var playersNeededLabel: UILabel!
@@ -46,7 +50,7 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     var selectedGameName: String?
     var selectedGameImage: String?
     
-    weak var databaseController: DatabaseProtocol?
+    weak var databaseController: DatabaseController?
     
     let annotation = MKPointAnnotation()
 
@@ -71,7 +75,6 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          databaseController = appDelegate.databaseController
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,9 +87,10 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
      locationManager.stopUpdatingLocation()
      }
     
-    override func didReceiveMemoryWarning() {
+  /*  override func didReceiveMemoryWarning() {
              super.didReceiveMemoryWarning()
-           }
+    } */
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
@@ -94,7 +98,7 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
             let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: (location?.coordinate.longitude)!)
             let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)) //zoom on map
             self.locationMapView.setRegion(region, animated: true)
-        }
+    }
     
     
     
@@ -109,17 +113,6 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
             self.locationMapView.addAnnotation(annotation)
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     @IBAction func saveGame(_ sender: Any) {
         var gamename: String
@@ -155,24 +148,19 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
              return
         }
         guard let gameimage = selectedGameImage else {
+            displayMessage(title: "No game image", message: "Please add image")
              return
         }
-        let db = Firestore.firestore()
-        var ref = db.collection("games").addDocument(data: [
-                                                               "Game name": gamename,
-                                                               "Session name": sessionname,
-                                                               "Lat": latitude as Double,
-                                                               "Long": longitude as Double,
-                                                        "Players needed": playersneeded,
-                                                        "Session Time": sessionTime,
-                                                               "Owner": user,
-                                                     "Game Image": gameimage ])
-        displayMessage(title: "Session Added", message: "You successfully created a session!")
+        let playersnumber = Int(playersneeded) ?? 1
+        if let game = databaseController?.addGameSession(game: gamename, sessionname: sessionname, playersneeded: playersnumber, latitude: latitude, longitude: longitude, sessiontime: sessionTime, sessionowner: user, gameimage: gameimage), game != nil {
+              displayMessage(title: "Session Added", message: "You successfully created a session!")
+           // navigationController?.popViewController(animated: true)
         sessionNameTextField.text?.removeAll()
         gameNameLabel.text = "  "
         playersNeededLabel.text = "1"
-        sessionDatepicker.date = Date()
+      //  sessionDatepicker.date = Date()
         locationMapView.removeAnnotation(annotation)
+        }
     }
     
     // MARK - GameDelegate methods
@@ -194,14 +182,15 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     }
     
     // MARK UITextfield delegate function
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-          //  setDefaultStyleForFormElements()
-        }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
            textField.resignFirstResponder()
            return true
        }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
               if segue.identifier == "searchGame" {
@@ -209,6 +198,16 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
                   destination.delegate = self
               }
           }
+    
+    func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let characterCountLimit = 30
+        _ = (sessionNameTextField.text! as NSString).replacingCharacters(in: range, with: string)
+        let startingLength = textFieldToChange.text?.count ?? 0
+        let lengthToAdd = string.count
+        let lengthToReplace = range.length
+        let newLength = startingLength + lengthToAdd - lengthToReplace
+      return newLength < characterCountLimit
+    }
 
     
 }

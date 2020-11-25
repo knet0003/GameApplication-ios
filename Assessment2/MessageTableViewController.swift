@@ -7,8 +7,20 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseAuth
 
-class MessageTableViewController: UITableViewController {
+class MessageTableViewController: UITableViewController, DatabaseListener {
+    var listenerType: ListenerType = .all
+    
+    func onUserChange(change: DatabaseChange, gamePlayers: [User]) {
+        
+    }
+    
+    func onGameListChange(change: DatabaseChange, games: [GameSession]) {
+        
+    }
+    
+    
     let CHANNEL_SEGUE = "channelSegue"
     let CHANNEL_CELL = "channelCell"
     var currentSender: Sender?
@@ -16,10 +28,15 @@ class MessageTableViewController: UITableViewController {
 
      var channelsRef: CollectionReference?
      var databaseListener: ListenerRegistration?
+    weak var databaseController: DatabaseController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.currentSender = Sender(id: UserDefaults.standard.object(forKey: "Uid") as! String, name: UserDefaults.standard.string(forKey: "Name")!)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
+        let currentuserid = Auth.auth().currentUser!.uid
+        let user = databaseController?.getUserByID(currentuserid)
+        self.currentSender = Sender(id: currentuserid , name: user!.name!)
         print(self.currentSender?.displayName as Any)
         
         let database = Firestore.firestore()
@@ -113,20 +130,7 @@ class MessageTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
 
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     
     // MARK: - Navigation

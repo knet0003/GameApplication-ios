@@ -14,7 +14,7 @@ class GamesTableViewCell: UITableViewCell {
     @IBOutlet weak var playersNeededLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var gameImage: UIImageView!
-    
+    @IBOutlet weak var sessionNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

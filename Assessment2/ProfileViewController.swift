@@ -20,6 +20,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     var channelsRef: CollectionReference?
     let annotation = MKPointAnnotation()
     let db = Firestore.firestore()
+    weak var databaseController: DatabaseController?
     
     @IBAction func editFields(_ sender: Any) {
         nameLabel.isHidden = true
@@ -29,6 +30,8 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     
     
     override func viewDidLoad() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+         databaseController = appDelegate.databaseController
         var dob: Date?
         var lat: Double?
         var long: Double?
@@ -36,11 +39,25 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         nameTextField.delegate = self
         nameTextField.isHidden = true
         nameTextField.text = nil
-        nameLabel.text = UserDefaults.standard.string(forKey: "Name")!
-        emailLabel.text  = UserDefaults.standard.string(forKey: "Email")!
-        dob = UserDefaults.standard.object(forKey: "Dob") as! Date
-        lat = UserDefaults.standard.double(forKey: "Lat")
-        long = UserDefaults.standard.double(forKey: "Long")
+      //  nameLabel.text = UserDefaults.standard.string(forKey: "Name")!
+       // emailLabel.text  = UserDefaults.standard.string(forKey: "Email")!
+       // dob = UserDefaults.standard.object(forKey: "Dob") as! Date
+       // lat = UserDefaults.standard.double(forKey: "Lat")
+       // long = UserDefaults.standard.double(forKey: "Long")
+        let currentuser = databaseController?.authController.currentUser
+     //   guard let userName = databaseController?.currentUser?.name else{
+     //       return
+      //  }
+      //  nameLabel.text = userName
+        guard let email = currentuser?.email else {
+            return
+        }
+        emailLabel.text = email
+        let user  = databaseController?.getUserByID(currentuser!.uid)
+        nameLabel.text = user?.name
+        dob = user?.DoB
+        lat = user?.latitude
+        long = user?.longitude
         let today = Date()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day], from: dob!, to: today)
@@ -69,11 +86,10 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let text = nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
             nameLabel.text = text
-            UserDefaults.standard.set(text, forKey: "Name")
             let user = Auth.auth().currentUser
-            db.collection("users").document(user!.uid).updateData(["Name": text])
-        nameTextField.isHidden = true
-        nameLabel.isHidden = false
+            db.collection("users").document(user!.uid).updateData(["name": text])
+            nameTextField.isHidden = true
+            nameLabel.isHidden = false
         view.endEditing(true)
         
     }
@@ -101,12 +117,10 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
             let coordinate = self.locationMapView.convert(point, toCoordinateFrom: self.locationMapView)
             annotation.coordinate = coordinate
             self.locationMapView.addAnnotation(annotation)
-            UserDefaults.standard.set(annotation.coordinate.latitude, forKey: "Lat")
-            UserDefaults.standard.set(annotation.coordinate.longitude, forKey: "Long")
             let lat = Double(annotation.coordinate.latitude)
             let long = Double(annotation.coordinate.longitude)
             let user = Auth.auth().currentUser
-            db.collection("users").document(user!.uid).updateData(["Lat": lat, "Long": long])
+            db.collection("users").document(user!.uid).updateData(["latitude": lat, "longitude": long])
             
                 }
             }
@@ -118,7 +132,8 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         } catch {
             print("Log out error: \(error.localizedDescription)")
         }
-        performSegue(withIdentifier: "logoutSegue", sender: self)
+        UserDefaults.standard.set(false, forKey: "status")
+        Switcher.updateRootVC()
         
     }
     

@@ -9,8 +9,10 @@ import UIKit
 import MessageKit
 import InputBarAccessoryView
 import FirebaseFirestore
+
 class ChatMessagesViewController: MessagesViewController, MessagesDataSource,
                                   MessagesLayoutDelegate, MessagesDisplayDelegate, InputBarAccessoryViewDelegate {
+    
     var sender: Sender?
     var currentChannel: Channel?
     var messagesList = [ChannelMessage]()
@@ -38,14 +40,14 @@ class ChatMessagesViewController: MessagesViewController, MessagesDataSource,
         messageInputBar.delegate = self
         if currentChannel != nil {
             let database = Firestore.firestore()
-            channelRef = database.collection("channels")
+        channelRef = database.collection("channels")
                 .document(currentChannel!.id).collection("messages")
             navigationItem.title = "\(currentChannel!.name)"
         }
-        self.messageInputBar.contentView.backgroundColor = UIColor.black
+        self.messageInputBar.contentView.backgroundColor = UIColor.darkGray
         self.messageInputBar.inputTextView.textColor = UIColor.white
         self.messageInputBar.sendButton.setTitleColor(.green, for: .normal)
-        self.messageInputBar.backgroundView.backgroundColor = UIColor.black
+        self.messageInputBar.backgroundView.backgroundColor = UIColor.darkGray
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,7 +82,7 @@ class ChatMessagesViewController: MessagesViewController, MessagesDataSource,
                 })
                 
                 self.messagesCollectionView.scrollToBottom()
-                self.messagesCollectionView.backgroundColor = UIColor.black
+                self.messagesCollectionView.backgroundColor = UIColor.darkGray
             }
     }
     
@@ -94,7 +96,7 @@ class ChatMessagesViewController: MessagesViewController, MessagesDataSource,
         guard let sender = sender else {
             return Sender(id: "",name: "") as! SenderType
         }
-        return sender as! SenderType
+        return sender as SenderType
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView:
