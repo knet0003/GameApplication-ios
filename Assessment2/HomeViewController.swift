@@ -11,7 +11,7 @@ import FirebaseAuth
 class HomeViewController: UIViewController, DatabaseListener {
     var listenerType: ListenerType = .all
     
-    func onUserChange(change: DatabaseChange, gamePlayers: [User]) {
+    func onUserChange(change: DatabaseChange, users: [User]) {
         
     }
     
@@ -29,10 +29,10 @@ class HomeViewController: UIViewController, DatabaseListener {
          databaseController = appDelegate.databaseController
         super.viewDidLoad()
         //self.currentSender = Sender(id: UserDefaults.standard.object(forKey: "Uid") as! String, name: UserDefaults.standard.string(forKey: "Name")!)
-        let currentauthuser = databaseController?.authController.currentUser
+       // let currentauthuser = databaseController?.authController.currentUser
       //  let currentuser = databaseController?.getUserByID(currentauthuser!.uid)
-       // let name = currentuser!.name
-      //  WelcomeLabel.text?.append(name!)
+        let name = UserDefaults.standard.string(forKey: "Name")
+        WelcomeLabel.text?.append(name!)
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(_ animated: Bool) {

@@ -13,7 +13,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating, DatabaseListener {
-    func onUserChange(change: DatabaseChange, gamePlayers: [User]) {
+    func onUserChange(change: DatabaseChange, users: [User]) {
         
     }
     

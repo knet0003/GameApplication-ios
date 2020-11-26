@@ -10,14 +10,14 @@ import FirebaseAuth
 import CoreLocation
 
 class GamesTableViewController: UITableViewController, DatabaseListener, UISearchResultsUpdating {
-    var listenerType: ListenerType = .games
+    var listenerType: ListenerType = .all
     
-    func onUserChange(change: DatabaseChange, gamePlayers: [User]) {
+    func onUserChange(change: DatabaseChange, users: [User]) {
         
     }
     
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
-        let allgames = databaseController!.gamesessionList
+        gameSessions.removeAll()
         let user = Auth.auth().currentUser?.uid
         for game in games {
             if game.sessionowner != user {
@@ -42,6 +42,7 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          databaseController = appDelegate.databaseController
+        gameSessions = databaseController!.gamesessionList
         let searchController = UISearchController(searchResultsController: nil)
                 searchController.searchResultsUpdater = self
                 searchController.obscuresBackgroundDuringPresentation = false
@@ -63,8 +64,8 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
     }
     override func viewWillDisappear(_ animated: Bool) {
         databaseController?.removeListener(listener: self)
-        gameSessions.removeAll()
-        filteredGameSessions.removeAll()
+       // gameSessions.removeAll()
+       // filteredGameSessions.removeAll()
     }
 
     // MARK: - Table view data source

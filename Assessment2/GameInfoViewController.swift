@@ -12,10 +12,10 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListener, UITextFieldDelegate {
-    var listenerType: ListenerType = .games
+    var listenerType: ListenerType = .all
     
-    func onUserChange(change: DatabaseChange, gamePlayers: [User]) {
-        print(gamePlayers)
+    func onUserChange(change: DatabaseChange, users: [User]) {
+
         
     }
     
@@ -27,11 +27,6 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
                 }
             }
         }
-       // for game in games {
-       //     print(game.gamename)
-       // }
-       // let user = Auth.auth().currentUser?.uid
-        
     }
     
 
@@ -44,6 +39,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
     @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var sessionNameTextField: UITextField!
     
+    @IBOutlet weak var joinUsersTable: UITableView!
     @IBOutlet weak var sessionTimeDatepicker: UIDatePicker!
     
     @IBAction func playersStepper(_ sender: UIStepper) {
@@ -55,6 +51,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
     var gameSession: GameSession?
     let db = Firestore.firestore()
     var annotation = CLLocationCoordinate2D()
+    var userList: [User] = []
     
     @IBOutlet weak var stepper: UIStepper!
     override func viewDidLoad() {
@@ -75,6 +72,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
         sessionTimeLabel.text = time
         locationMapView.delegate = self
         let currentuserid = Auth.auth().currentUser?.uid
+        
         let userlat = databaseController?.getUserByID(currentuserid!)?.latitude
         let userlong = databaseController?.getUserByID(currentuserid!)?.longitude
         let ownername = databaseController?.getUserByID((gameSession?.sessionowner)!)!.name
@@ -82,9 +80,16 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
         if currentuserid == gameSession?.sessionowner {
             joinButton.isHidden = true
             editButton.isEnabled = true
+            
         } else {
             joinButton.isHidden = false
             editButton.isEnabled = false
+        }
+        if gameSession?.players?.count != 0 {
+            let players = gameSession?.players
+            for player in players! {
+                userList.append(player)
+            }
         }
         //let userlong = UserDefaults.standard.double(forKey: "Long")
         let userLocation = CLLocationCoordinate2DMake(userlat!, userlong!)
@@ -104,6 +109,25 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
         databaseController?.removeListener(listener: self)
     }
     
+    // MARK: - Table view data source
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+    return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection
+    section: Int) -> Int {
+    return userList.count
+    }
+      
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "playerscell", for: indexPath)
+        let user = userList[indexPath.row]
+        cell.textLabel?.text = user.name
+        return cell
+      }
+    
+    
 
     /*
     // MARK: - Navigation
@@ -121,8 +145,11 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
         guard let currentUser = databaseController?.getUserByID(currentuseruid) else{
             return
         }
-        databaseController?.addUserToGameSession(user: currentUser, gameSession: gameSession!)
+        if databaseController?.addUserToGameSession(user: currentUser, gameSession: gameSession!) == true {
         displayMessage(title: "Join successful", message: "You have successfully joined the session")
+        } else {
+            displayMessage(title: "Error in joining", message: "You could not join the session")
+        }
         
     }
     

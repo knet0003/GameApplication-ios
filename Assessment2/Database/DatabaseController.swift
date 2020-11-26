@@ -38,7 +38,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
        //  }
       //  self.currentUser = self.getUserByID(authController.currentUser?.uid)
         self.setUpUsersListener()
-        self.setUpGameSessionListener()
+       // self.setUpGameSessionListener()
     }
     
     func cleanup() {
@@ -55,6 +55,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
             gamesession.sessiontime = sessiontime
             gamesession.sessionowner = sessionowner
             gamesession.gameimage = gameimage
+            gamesession.players = [User]()
             do {
                 if let gameRef = try gamesessionRef?.addDocument(from: gamesession) {
                     gamesession.sessionid = String(gameRef.documentID)
@@ -92,7 +93,10 @@ class DatabaseController: NSObject, DatabaseProtocol {
     
     func addListener(listener: DatabaseListener) {
         listeners.addDelegate(listener)
-
+        if listener.listenerType == ListenerType.users ||
+         listener.listenerType == ListenerType.all {
+         listener.onUserChange(change: .update, users: userList)
+         }
         if listener.listenerType == ListenerType.games ||
          listener.listenerType == ListenerType.all {
          listener.onGameListChange(change: .update, games: gamesessionList)
@@ -104,17 +108,6 @@ class DatabaseController: NSObject, DatabaseProtocol {
     }
     
     // MARK:- Setup code for Firestore listeners
-    func setUpGameSessionListener() {
-        gamesessionRef = database.collection("games")
-
-        gamesessionRef?.addSnapshotListener (includeMetadataChanges: true) {(querySnapshot, error) in
-            guard let querySnapshot = querySnapshot else {
-                print("Error fetching documents: \(error!)")
-                return
-            }
-            self.parseGamesSessionsSnapshot(snapshot: querySnapshot)
-     }
-     }
     
     func setUpUsersListener() {
         userRef =  database.collection("users")
@@ -124,55 +117,24 @@ class DatabaseController: NSObject, DatabaseProtocol {
          return
          }
          self.parseUsersSnapshot(snapshot: querySnapshot)
-        // self.setUpGameSessionListener()
          }
+        self.setUpGameSessionListener()
     }
     
-    // MARK:- Parse Functions for Firebase Firestore responses
-    func parseGamesSessionsSnapshot(snapshot: QuerySnapshot) {
-        snapshot.documentChanges.forEach { (change) in
-        let gameId = change.document.documentID
-        
-        var gameSession: GameSession?
-        
-        do {
-            gameSession = try change.document.data(as: GameSession.self)
-         } catch {
-         print("Unable to decode gamesession. Is the gamesession malformed?")
-         return
-         }
+    func setUpGameSessionListener() {
+        gamesessionRef = database.collection("games")
 
-         guard let game = gameSession else {
-         print("Document doesn't exist")
-         return;
-         }
-        
-        game.sessionid = gameId
-        
-        if change.type == .added {
-            gamesessionList.append(game)
-         }
-         else if change.type == .modified {
-            guard let index = getGameIndexByID(gameId) else{
+        gamesessionRef?.addSnapshotListener (includeMetadataChanges: true) {(querySnapshot, error) in
+            guard let querySnapshot = querySnapshot else {
+                print("Error fetching documents: \(error!)")
                 return
             }
-            gamesessionList[index] = game
-         }
-         else if change.type == .removed {
-         if let index = getGameIndexByID(gameId) {
-            gamesessionList.remove(at: index)
-         }
-         }
-    }
-        
-        listeners.invoke{(listener) in
-            if listener.listenerType == ListenerType.games ||
-                                                        listener.listenerType == ListenerType.all {
-                                                        listener.onGameListChange(change: .update, games: gamesessionList)
+            self.parseGamesSessionsSnapshot(snapshot: querySnapshot)
         }
-    }
-    }
+     }
     
+    
+    // MARK:- Parse Functions for Firebase Firestore responses
     func parseUsersSnapshot(snapshot: QuerySnapshot) {
         snapshot.documentChanges.forEach { (change) in
             let userID = change.document.documentID
@@ -209,9 +171,52 @@ class DatabaseController: NSObject, DatabaseProtocol {
             listeners.invoke { (listener) in
                 if listener.listenerType == ListenerType.users ||
                     listener.listenerType == ListenerType.all {
-                    listener.onUserChange(change: .update, gamePlayers: userList)
+                    listener.onUserChange(change: .update, users: userList)
                 }
             }
+    }
+    
+    func parseGamesSessionsSnapshot(snapshot: QuerySnapshot) {
+        snapshot.documentChanges.forEach { (change) in
+        let gameId = change.document.documentID
+        
+        var gameSession: GameSession?
+        
+        do {
+            gameSession = try change.document.data(as: GameSession.self)
+         } catch {
+         print("Unable to decode gamesession. Is the gamesession malformed?")
+         return
+         }
+
+         guard let game = gameSession else {
+         print("Document doesn't exist")
+         return;
+         }
+        game.sessionid = gameId
+        
+        if change.type == .added {
+            gamesessionList.append(game)
+         }
+         else if change.type == .modified {
+            guard let index = getGameIndexByID(gameId) else{
+                return
+            }
+            gamesessionList[index] = game
+         }
+         else if change.type == .removed {
+         if let index = getGameIndexByID(gameId) {
+            gamesessionList.remove(at: index)
+         }
+         }
+    }
+        
+        listeners.invoke{(listener) in
+            if listener.listenerType == ListenerType.games ||
+                                                        listener.listenerType == ListenerType.all {
+                                                        listener.onGameListChange(change: .update, games: gamesessionList)
+        }
+    }
     }
     
     
@@ -220,7 +225,6 @@ class DatabaseController: NSObject, DatabaseProtocol {
         if let game = getGameByID(id) {
          return gamesessionList.firstIndex(of: game)
          }
-
          return nil
         
     }
@@ -255,8 +259,8 @@ class DatabaseController: NSObject, DatabaseProtocol {
     
     func addUserToGameSession(user: User, gameSession: GameSession) -> Bool {
 
-     guard let userID = user.uid, let gameID = gameSession.sessionid,
-           gameSession.players!.count < gameSession.playersneeded! else {
+     guard let userID = user.uid, let gameID = gameSession.sessionid /*,
+           gameSession.players!.count < gameSession.playersneeded! */ else {
      return false
      }
 

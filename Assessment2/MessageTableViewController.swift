@@ -12,7 +12,7 @@ import FirebaseAuth
 class MessageTableViewController: UITableViewController, DatabaseListener {
     var listenerType: ListenerType = .all
     
-    func onUserChange(change: DatabaseChange, gamePlayers: [User]) {
+    func onUserChange(change: DatabaseChange, users: [User]) {
         
     }
     

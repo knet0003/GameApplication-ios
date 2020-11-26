@@ -18,7 +18,7 @@ enum ListenerType {
 }
 protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
-    func onUserChange(change: DatabaseChange, gamePlayers: [User])
+    func onUserChange(change: DatabaseChange, users: [User])
     func onGameListChange(change: DatabaseChange, games: [GameSession])
 }
 protocol DatabaseProtocol: AnyObject {

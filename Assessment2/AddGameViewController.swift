@@ -15,7 +15,7 @@ import FirebaseFirestore
 import Firebase
 
 class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, AddGameDelegate, UITextFieldDelegate, DatabaseListener {
-    func onUserChange(change: DatabaseChange, gamePlayers: [User]) {
+    func onUserChange(change: DatabaseChange, users: [User]) {
         
     }
     

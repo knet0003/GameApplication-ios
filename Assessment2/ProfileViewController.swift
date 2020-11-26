@@ -10,7 +10,23 @@ import FirebaseAuth
 import FirebaseFirestore
 import MapKit
 
-class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDelegate {
+class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDelegate, DatabaseListener {
+    var listenerType: ListenerType = .users
+    
+    func onUserChange(change: DatabaseChange, users: [User]) {
+        for u in users {
+            if u.uid == user.uid{
+                user = u
+            }
+        }
+        nameLabel.text = user.name
+    }
+    
+    func onGameListChange(change: DatabaseChange, games: [GameSession]) {
+        
+    }
+    
+    
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nameLabel: UILabel!
@@ -19,6 +35,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     @IBOutlet weak var locationMapView: MKMapView!
     var channelsRef: CollectionReference?
     let annotation = MKPointAnnotation()
+    var user = User()
     let db = Firestore.firestore()
     weak var databaseController: DatabaseController?
     
@@ -53,11 +70,11 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
             return
         }
         emailLabel.text = email
-        let user  = databaseController?.getUserByID(currentuser!.uid)
-        nameLabel.text = user?.name
-        dob = user?.DoB
-        lat = user?.latitude
-        long = user?.longitude
+        user  = (databaseController?.getUserByID(currentuser!.uid))!
+        nameLabel.text = user.name
+        dob = user.DoB
+        lat = user.latitude
+        long = user.longitude
         let today = Date()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day], from: dob!, to: today)
@@ -88,6 +105,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
             nameLabel.text = text
             let user = Auth.auth().currentUser
             db.collection("users").document(user!.uid).updateData(["name": text])
+            UserDefaults.standard.set(text, forKey: "Name")
             nameTextField.isHidden = true
             nameLabel.isHidden = false
         view.endEditing(true)
@@ -133,6 +151,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
             print("Log out error: \(error.localizedDescription)")
         }
         UserDefaults.standard.set(false, forKey: "status")
+        //UserDefaults.standard.set(" ", forKey: "Name")
         Switcher.updateRootVC()
         
     }

@@ -109,7 +109,7 @@ class SignInViewController: UIViewController {
                                         let lat = document.get("latitude") as? Double
                                         let long = document.get("longitude") as? Double
                                       //  UserDefaults.standard.set(user?.user.uid, forKey: "Uid")
-                                      //  UserDefaults.standard.set(name, forKey: "Name")
+                                        UserDefaults.standard.set(name, forKey: "Name")
                                       //  UserDefaults.standard.set(email, forKey: "Email")
                                       //  UserDefaults.standard.set(lat, forKey: "Lat")
                                       //  UserDefaults.standard.set(long, forKey: "Long")
