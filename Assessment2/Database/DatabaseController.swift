@@ -140,27 +140,21 @@ class DatabaseController: NSObject, DatabaseProtocol {
             let userID = change.document.documentID
             print(userID)
 
-            var parsedUser: User?
-
-            do {
-                parsedUser = try change.document.data(as: User.self)
-            } catch {
-                print("Unable to decode usr. Is the user malformed?")
-                return
-            }
-
-            guard let user = parsedUser else {
-                print("Document doesn't exist")
-                return;
-            }
-
-            user.uid = userID
+            let parsedUser = User()
+            //timestamp conversion not working
+            let sessiontimestamp = change.document.data()["DoB"] as? Timestamp
+            parsedUser.DoB = sessiontimestamp!.dateValue()
+            parsedUser.latitude = change.document.data()["latitude"] as? Double
+            parsedUser.longitude = change.document.data()["longitude"] as? Double
+            parsedUser.name = change.document.data()["name"] as? String
+            parsedUser.uid = change.document.data()["uid"] as? String
+    
             if change.type == .added {
-                userList.append(user)
+                userList.append(parsedUser)
             }
             else if change.type == .modified {
                 let index = getUserIndexByID(userID)!
-                userList[index] = user
+                userList[index] = parsedUser
             }
             else if change.type == .removed {
                 if let index = getUserIndexByID(userID) {
@@ -192,6 +186,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
             gameSession.gamename =  change.document.data()["gamename"] as? String
             gameSession.sessionname = change.document.data()["sessionname"] as? String
             gameSession.sessionowner = change.document.data()["sessionowner"] as? String
+            //timestamp conversion not working
             let sessiontimestamp = change.document.data()["sessiontime"] as? Timestamp
             gameSession.sessiontime = sessiontimestamp?.dateValue()
             gameSession.gameimage =  change.document.data()["gameimage"] as? String
