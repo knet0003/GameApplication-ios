@@ -202,6 +202,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
             let newSessionLocation = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude)
            // annotation = mkp
             let currentuserid = Auth.auth().currentUser?.uid
+            if currentuserid == gameSession?.sessionowner {
             let userlat = databaseController?.getUserByID(currentuserid!)?.latitude
             let userlong = databaseController?.getUserByID(currentuserid!)?.longitude
             
@@ -221,6 +222,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
             let sessionid: String = (gameSession?.sessionid)!
             db.collection("games").document(sessionid).updateData(["latitude": lat, "longitude": long])
                 }
+        }
             }
     
     //Code source: https://stackoverflow.com/questions/29319643/how-to-draw-a-route-between-two-locations-using-mapkit-in-swift

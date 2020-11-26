@@ -38,7 +38,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
        //  }
       //  self.currentUser = self.getUserByID(authController.currentUser?.uid)
         self.setUpUsersListener()
-       // self.setUpGameSessionListener()
+        self.setUpGameSessionListener()
     }
     
     func cleanup() {
@@ -59,7 +59,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
             do {
                 if let gameRef = try gamesessionRef?.addDocument(from: gamesession) {
                     gamesession.sessionid = String(gameRef.documentID)
-                    gameRef.setData(["id": gamesession.sessionid ?? "nil"], merge: true)
+                    gameRef.setData(["sessionid": gamesession.sessionid ?? "nil"], merge: true)
                 }
             } catch {
                 print("Failed to serialize hero")
@@ -118,13 +118,13 @@ class DatabaseController: NSObject, DatabaseProtocol {
          }
          self.parseUsersSnapshot(snapshot: querySnapshot)
          }
-        self.setUpGameSessionListener()
+      //  self.setUpGameSessionListener()
     }
     
     func setUpGameSessionListener() {
         gamesessionRef = database.collection("games")
 
-        gamesessionRef?.addSnapshotListener (includeMetadataChanges: true) {(querySnapshot, error) in
+        gamesessionRef?.addSnapshotListener {(querySnapshot, error) in
             guard let querySnapshot = querySnapshot else {
                 print("Error fetching documents: \(error!)")
                 return

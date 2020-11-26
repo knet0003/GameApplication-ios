@@ -630,8 +630,8 @@
             filePath = "Assessment2/GameInfoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "280"
-            endingLineNumber = "280"
+            startingLineNumber = "282"
+            endingLineNumber = "282"
             landmarkName = "mapView(_:rendererFor:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -646,8 +646,8 @@
             filePath = "Assessment2/GameInfoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
             landmarkName = "showRouteOnMap(pickupCoordinate:destinationCoordinate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -662,8 +662,8 @@
             filePath = "Assessment2/GameInfoViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "229"
-            endingLineNumber = "229"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "showRouteOnMap(pickupCoordinate:destinationCoordinate:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -860,7 +860,7 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "AC0B5D20-CAF6-4B1D-82FD-E51A2715985A - 810270436f5f8301"
+                  uuid = "AC0B5D20-CAF6-4B1D-82FD-E51A2715985A - 810270436f507af1"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -870,12 +870,12 @@
                   urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/Database/DatabaseController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "132"
-                  endingLineNumber = "132"
+                  startingLineNumber = "180"
+                  endingLineNumber = "180"
                   offsetFromSymbolStart = "43">
                </Location>
                <Location
-                  uuid = "AC0B5D20-CAF6-4B1D-82FD-E51A2715985A - ace248dccf50949f"
+                  uuid = "AC0B5D20-CAF6-4B1D-82FD-E51A2715985A - ace248dccf5f6eaf"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -885,8 +885,8 @@
                   urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/Database/DatabaseController.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181"
                   offsetFromSymbolStart = "88">
                </Location>
             </Locations>
@@ -1104,7 +1104,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "A1EB56C4-E729-4B39-8639-2F1C9B1BA2E0"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Assessment2/AppDelegate.swift"
@@ -1129,6 +1129,118 @@
             startingLineNumber = "113"
             endingLineNumber = "113"
             landmarkName = "setUpUsersListener()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "85E2A64C-8B3D-445B-B375-1A5C865CE347"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/Database/DatabaseController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "parseUsersSnapshot(snapshot:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "85E2A64C-8B3D-445B-B375-1A5C865CE347 - 2fa879657a6ee1fc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Assessment2.DatabaseController.parseUsersSnapshot(snapshot: __C.FIRQuerySnapshot) -&gt; ()"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/Database/DatabaseController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "139"
+                  endingLineNumber = "139"
+                  offsetFromSymbolStart = "43">
+               </Location>
+               <Location
+                  uuid = "85E2A64C-8B3D-445B-B375-1A5C865CE347 - b07c30fa121ea5cb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.FIRDocumentChange) -&gt; () in Assessment2.DatabaseController.parseUsersSnapshot(snapshot: __C.FIRQuerySnapshot) -&gt; ()"
+                  moduleName = "Assessment2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Viki/Desktop/Advanced%20mobile/Assessment2/Assessment2/Assessment2/Database/DatabaseController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "92FCA41B-812E-4289-8B42-24306275B70F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/MyGamesTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "716A07D7-5DEB-4A2D-9F07-B634104190D8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/MyGamesTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "viewWillAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "754602C1-1AD5-437E-B910-EB8D2C4E9FA8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/MyGamesTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "viewWillDisappear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "44B78F86-6DAC-402E-95B9-5EA50DFCA4B9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Assessment2/MyGamesTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

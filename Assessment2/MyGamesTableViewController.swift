@@ -25,8 +25,6 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-         databaseController = appDelegate.databaseController
         let searchController = UISearchController(searchResultsController: nil)
                 searchController.searchResultsUpdater = self
                 searchController.obscuresBackgroundDuringPresentation = false
@@ -37,6 +35,8 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
         databaseController?.addListener(listener: self)
        // loadAllGames()
     }
