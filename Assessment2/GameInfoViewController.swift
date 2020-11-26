@@ -14,21 +14,6 @@ import FirebaseAuth
 class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListener, UITextFieldDelegate {
     var listenerType: ListenerType = .all
     
-    func onUserChange(change: DatabaseChange, users: [User]) {
-
-        
-    }
-    
-    func onGameListChange(change: DatabaseChange, games: [GameSession]) {
-        if change == .update {
-            for game in games {
-                if game.sessionid == gameSession?.sessionid {
-                    gameSession = game
-                }
-            }
-        }
-    }
-    
 
     @IBOutlet weak var gameNameLabel: UILabel!
     @IBOutlet weak var sessionNameLabel: UILabel!
@@ -85,7 +70,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
             joinButton.isHidden = false
             editButton.isEnabled = false
         }
-        if gameSession?.players?.count != 0 {
+        if gameSession?.players?.count != nil {
             let players = gameSession?.players
             for player in players! {
                 userList.append(player)
@@ -127,17 +112,23 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
         return cell
       }
     
-    
+    // DatabaseListener methods
+    func onUserChange(change: DatabaseChange, users: [User]) {
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
     }
-    */
+    
+    func onGameListChange(change: DatabaseChange, games: [GameSession]) {
+        if change == .update {
+            for game in games {
+                if game.sessionid == gameSession?.sessionid {
+                    gameSession = game
+                }
+            }
+        }
+    }
+    
+    //joinGame button
     @IBAction func joinGame(_ sender: Any) {
         guard let currentuseruid = Auth.auth().currentUser?.uid else{
             return

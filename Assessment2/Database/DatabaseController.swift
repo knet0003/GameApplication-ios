@@ -180,29 +180,52 @@ class DatabaseController: NSObject, DatabaseProtocol {
         snapshot.documentChanges.forEach { (change) in
         let gameId = change.document.documentID
         
-        var gameSession: GameSession?
+        var gameSession = GameSession()
         
-        do {
+       /* do {
             gameSession = try change.document.data(as: GameSession.self)
          } catch {
          print("Unable to decode gamesession. Is the gamesession malformed?")
          return
-         }
+         } */
+      //      do {
+            gameSession.gamename =  change.document.data()["gamename"] as? String
+            gameSession.sessionname = change.document.data()["sessionname"] as? String
+            gameSession.sessionowner = change.document.data()["sessionowner"] as? String
+            let sessiontimestamp = change.document.data()["sessiontime"] as? Timestamp
+            gameSession.sessiontime = sessiontimestamp?.dateValue()
+            gameSession.gameimage =  change.document.data()["gameimage"] as? String
+            gameSession.longitude = change.document.data()["longitude"] as? Double
+            gameSession.latitude = change.document.data()["latitude"] as? Double
+            gameSession.playersneeded = change.document.data()["playersneeded"] as? Int
+            gameSession.sessionid = change.document.data()["sessionid"] as? String
+                
+         //   } catch {
+          //      print("Unable to decode gamesession. Is the gamesession malformed?")
+              //  return
+            //}
+            if let playersReferences = change.document.data()["players"] as? [DocumentReference] {
+                for reference in playersReferences {
+                    if let user = getUserByID(reference.documentID) {
+                        gameSession.players?.append(user)
+                    }
+                }
+            }
 
-         guard let game = gameSession else {
-         print("Document doesn't exist")
-         return;
-         }
-        game.sessionid = gameId
+       //  guard let game = gameSession else {
+        // print("Document doesn't exist")
+        // return;
+        // }
+       // game.sessionid = gameId
         
         if change.type == .added {
-            gamesessionList.append(game)
+            gamesessionList.append(gameSession)
          }
          else if change.type == .modified {
             guard let index = getGameIndexByID(gameId) else{
                 return
             }
-            gamesessionList[index] = game
+            gamesessionList[index] = gameSession
          }
          else if change.type == .removed {
          if let index = getGameIndexByID(gameId) {
@@ -259,10 +282,17 @@ class DatabaseController: NSObject, DatabaseProtocol {
     
     func addUserToGameSession(user: User, gameSession: GameSession) -> Bool {
 
-     guard let userID = user.uid, let gameID = gameSession.sessionid /*,
-           gameSession.players!.count < gameSession.playersneeded! */ else {
+    let numberofplayers = gameSession.players?.count ?? 0
+     guard let userID = user.uid, let gameID = gameSession.sessionid,
+      numberofplayers < gameSession.playersneeded! else {
      return false
      }
+        
+    for player in gameSession.players! {
+            if player.uid == userID {
+                return false
+            }
+        }
 
      if let newPlayerRef = userRef?.document(userID) {
         gamesessionRef?.document(gameID).updateData(
