@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import MapKit
 import Firebase
+import FirebaseFirestore
 
 class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate {
 
@@ -18,14 +19,18 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var DoBDatePicker: UIDatePicker!
     @IBOutlet weak var locationMapView: MKMapView!
+    weak var databaseController: DatabaseController?
     var locationManager: CLLocationManager = CLLocationManager()
     var currentLocation: CLLocationCoordinate2D?
     static let DEFAULT_MAP_LAT = -37.830531
     static let DEFAULT_MAP_LON = 144.981197
+    let annotation = MKPointAnnotation()
 //    @IBOutlet weak var showPassImage: UIImageView!
 //    var iconClick = true
     
     override func viewDidLoad() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
         super.viewDidLoad()
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 10
@@ -46,6 +51,7 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         nameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        DoBDatePicker.maximumDate = Date()
         // Do any additional setup after loading the view.
 //        let tapGesture = UITapGestureRecognizer(target: self, action: Selector(("imageTapped:")))
 //
@@ -54,6 +60,7 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
 //            // make sure imageView can be interacted with by user
 //        showPassImage.isUserInteractionEnabled = true
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         locationManager.startUpdatingLocation()
@@ -84,6 +91,7 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
     }
+    
     func displayErrorMessage(_ errorMessage: String) {
         let alertController = UIAlertController(title: "Error", message:
                                                     errorMessage, preferredStyle: UIAlertController.Style.alert)
@@ -110,7 +118,6 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 let locationView = sender.location(in: locationMapView)
                 let tappedView = locationMapView.convert(locationView, toCoordinateFrom: locationMapView)
                 let newSelectedCoordinates = CLLocationCoordinate2D(latitude: tappedView.latitude, longitude: tappedView.longitude)
-                let annotation = MKPointAnnotation()
                 annotation.coordinate = newSelectedCoordinates
                 let allPreviosAnnotation = locationMapView.annotations
                 locationMapView.removeAnnotations(allPreviosAnnotation)
@@ -131,33 +138,32 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = nameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let Dob = DoBDatePicker.date
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { [self] (user, error) in
             if let error = error {
                 self.displayErrorMessage(error.localizedDescription)
             }
             else{
-                let db = Firestore.firestore()
-                var ref: DocumentReference? = nil
-                ref = db.collection("users").addDocument(data: [
-                                                            "Name": name,
+                databaseController?.addUser(uid: (user?.user.uid)!, name: name, latitude: self.annotation.coordinate.latitude, longitude: self.annotation.coordinate.longitude, DoB: Dob)
+               /* let db = Firestore.firestore()
+               // db.collection("users").document(user!.user.uid).setData([
+                                                            "name": name,
                                                             "DoB": Dob,
-                                                            "Lat": self.currentLocation!.latitude as Double,
-                                                            "Long": self.currentLocation!.longitude as Double,
-                                                            "uid": user!.user.uid])
-                self.performSegue(withIdentifier: "signinSegue", sender: nil)
+                                                            "latitude": self.currentLocation!.latitude as Double,
+                                                            "longitude": self.currentLocation!.longitude as Double,
+                                                            "uid": user!.user.uid]) */
+                self.navigationController?.popViewController(animated: true)
+                performSegue(withIdentifier: "backToSignin", sender: self)
             }
         }
+        
     }
     
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func backToSignin(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+        performSegue(withIdentifier: "backToSignin", sender: self)
+        
     }
-    */
+    
 
 }

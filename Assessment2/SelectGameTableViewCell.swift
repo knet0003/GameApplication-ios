@@ -1,20 +1,16 @@
 //
-//  GamesTableViewCell.swift
+//  SelectGameTableViewCell.swift
 //  Assessment2
 //
-//  Created by Net Keovechchta on 2020/11/05.
+//  Created by Net Keovechchta on 2020/11/20.
 //
 
 import UIKit
 
-class GamesTableViewCell: UITableViewCell {
+class SelectGameTableViewCell: UITableViewCell {
 
     @IBOutlet weak var gameNameLabel: UILabel!
-    @IBOutlet weak var sessionTimeLabel: UILabel!
-    @IBOutlet weak var playersNeededLabel: UILabel!
-    @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var gameImage: UIImageView!
-    @IBOutlet weak var sessionNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

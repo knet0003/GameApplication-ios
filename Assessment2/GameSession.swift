@@ -9,22 +9,28 @@ import UIKit
 import CoreLocation
 
 class GameSession: NSObject, Codable {
-    var id: String?
+    var sessionid: String?
     var gamename: String?
     var sessionname: String?
     var playersneeded: Int?
-    var latitude: String?
-    var longitude: String?
+    var latitude: Double?
+    var longitude: Double?
     var sessiontime: Date?
+    var sessionowner: String?
+    var gameimage: String?
+    var players: [User]?
     
 
      private enum CodingKeys: String, CodingKey {
-        case id
+        case sessionid
         case gamename
         case sessionname
         case playersneeded
         case latitude
         case longitude
         case sessiontime
+        case sessionowner
+        case gameimage
+        case players
      }
 }

@@ -17,10 +17,13 @@ class SignInViewController: UIViewController {
     var handle: AuthStateDidChangeListenerHandle?
     var currentSender: Sender?
     var channelsRef: CollectionReference?
+    weak var databaseController: DatabaseController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let database = Firestore.firestore()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+         databaseController = appDelegate.databaseController
+      /*  let database = Firestore.firestore()
         let settings = database.settings
         settings.areTimestampsInSnapshotsEnabled = true
         settings.isPersistenceEnabled = true
@@ -38,12 +41,12 @@ class SignInViewController: UIViewController {
                                                                                 print("Error getting documents: \(err)")
                                                                             } else {
                                                                                 for document in querySnapshot!.documents {
-                                                                                    name = document.get("Name") as! String
+                                                                                    name = document.get("name") as? String
                                                                                     self.currentSender = Sender(id: user!.uid, name: name!)
                                                                                     email = user!.email
-                                                                                    dob = document.get("DoB") as! Timestamp
-                                                                                    lat = document.get("Lat") as! Double
-                                                                                    long = document.get("Long") as! Double
+                                                                                    dob = document.get("DoB") as? Timestamp
+                                                                                    lat = document.get("Lat") as? Double
+                                                                                    long = document.get("Long") as? Double
                                                                                     UserDefaults.standard.set(user!.uid, forKey: "Uid")
                                                                                     UserDefaults.standard.set(name, forKey: "Name")
                                                                                     UserDefaults.standard.set(email, forKey: "Email")
@@ -55,10 +58,15 @@ class SignInViewController: UIViewController {
                                                                                 }
                                                                             }
                                                                 }
-                                                            }})
+                                                            }})  */
         
-        // Do any additional setup after loading the view.
+        
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+     super.viewWillDisappear(animated)
+    // Auth.auth().removeStateDidChangeListener(handle!)
+     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -87,11 +95,36 @@ class SignInViewController: UIViewController {
             if let error = error {
                 self.displayErrorMessage(error.localizedDescription)
             } else {
-            
+                UserDefaults.standard.set(true, forKey: "status")
+                if user != nil {
+                    self.channelsRef?.whereField("uid", isEqualTo: user?.user.uid as Any).getDocuments(){(querySnapshot,err) in
+                        if let err = err {
+                                    print("Error getting documents: \(err)")
+                                } else {
+                                    for document in querySnapshot!.documents {
+                                        let name = document.get("name") as? String
+                                        self.currentSender = Sender(id: (user?.user.uid)!, name: name!)
+                                        let email = user?.user.email
+                                        let dob = document.get("DoB") as? Timestamp
+                                        let lat = document.get("latitude") as? Double
+                                        let long = document.get("longitude") as? Double
+                                      //  UserDefaults.standard.set(user?.user.uid, forKey: "Uid")
+                                        UserDefaults.standard.set(name, forKey: "Name")
+                                      //  UserDefaults.standard.set(email, forKey: "Email")
+                                      //  UserDefaults.standard.set(lat, forKey: "Lat")
+                                      //  UserDefaults.standard.set(long, forKey: "Long")
+                                      //  UserDefaults.standard.set(dob?.dateValue(), forKey: "Dob")
+                                      //  UserDefaults.standard.synchronize()
+                                        
+                                    }}}}
+                
+                Switcher.updateRootVC()
+                self.navigationController?.popViewController(animated: true)
             }
             
         }
     }
+    
     func displayErrorMessage(_ errorMessage: String) {
         let alertController = UIAlertController(title: "Error", message:
                                                     errorMessage, preferredStyle: UIAlertController.Style.alert)
@@ -101,15 +134,5 @@ class SignInViewController: UIViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
