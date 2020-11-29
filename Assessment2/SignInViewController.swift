@@ -12,6 +12,7 @@ import FirebaseFirestore
 class SignInViewController: UIViewController {
     
     
+    @IBOutlet weak var SignInButton: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     var handle: AuthStateDidChangeListenerHandle?
@@ -23,16 +24,12 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          databaseController = appDelegate.databaseController
-      /*  let database = Firestore.firestore()
+        let database = Firestore.firestore()
         let settings = database.settings
         settings.areTimestampsInSnapshotsEnabled = true
         settings.isPersistenceEnabled = true
         database.settings = settings
-        var name: String?
-        var email: String?
-        var dob: Timestamp?
-        var lat: Double?
-        var long: Double?
+        SignInButton.layer.cornerRadius = 5;
         channelsRef = database.collection("users")
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
                                                             if user != nil {
@@ -40,32 +37,17 @@ class SignInViewController: UIViewController {
                                                                     if let err = err {
                                                                                 print("Error getting documents: \(err)")
                                                                             } else {
-                                                                                for document in querySnapshot!.documents {
-                                                                                    name = document.get("name") as? String
-                                                                                    self.currentSender = Sender(id: user!.uid, name: name!)
-                                                                                    email = user!.email
-                                                                                    dob = document.get("DoB") as? Timestamp
-                                                                                    lat = document.get("Lat") as? Double
-                                                                                    long = document.get("Long") as? Double
-                                                                                    UserDefaults.standard.set(user!.uid, forKey: "Uid")
-                                                                                    UserDefaults.standard.set(name, forKey: "Name")
-                                                                                    UserDefaults.standard.set(email, forKey: "Email")
-                                                                                    UserDefaults.standard.set(lat, forKey: "Lat")
-                                                                                    UserDefaults.standard.set(long, forKey: "Long")
-                                                                                    UserDefaults.standard.set(dob?.dateValue(), forKey: "Dob")
-                                                                                    UserDefaults.standard.synchronize()
                                                                                     self.performSegue(withIdentifier: "loginSegue", sender: nil)
-                                                                                }
                                                                             }
                                                                 }
-                                                            }})  */
+                                                            }})
         
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
      super.viewWillDisappear(animated)
-    // Auth.auth().removeStateDidChangeListener(handle!)
+     Auth.auth().removeStateDidChangeListener(handle!)
      }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -104,22 +86,10 @@ class SignInViewController: UIViewController {
                                     for document in querySnapshot!.documents {
                                         let name = document.get("name") as? String
                                         self.currentSender = Sender(id: (user?.user.uid)!, name: name!)
-                                        let email = user?.user.email
-                                        let dob = document.get("DoB") as? Timestamp
-                                        let lat = document.get("latitude") as? Double
-                                        let long = document.get("longitude") as? Double
-                                      //  UserDefaults.standard.set(user?.user.uid, forKey: "Uid")
-                                        UserDefaults.standard.set(name, forKey: "Name")
-                                      //  UserDefaults.standard.set(email, forKey: "Email")
-                                      //  UserDefaults.standard.set(lat, forKey: "Lat")
-                                      //  UserDefaults.standard.set(long, forKey: "Long")
-                                      //  UserDefaults.standard.set(dob?.dateValue(), forKey: "Dob")
-                                      //  UserDefaults.standard.synchronize()
                                         
                                     }}}}
                 
-                Switcher.updateRootVC()
-                self.navigationController?.popViewController(animated: true)
+//                self.navigationController?.popViewController(animated: true)
             }
             
         }

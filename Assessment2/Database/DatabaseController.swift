@@ -55,7 +55,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
             gamesession.sessiontime = sessiontime
             gamesession.sessionowner = sessionowner
             gamesession.gameimage = gameimage
-            gamesession.players = [User]()
+            gamesession.players = [String]()
             do {
                 if let gameRef = try gamesessionRef?.addDocument(from: gamesession) {
                     gamesession.sessionid = String(gameRef.documentID)
@@ -68,13 +68,14 @@ class DatabaseController: NSObject, DatabaseProtocol {
          return gamesession
     }
     
-    func addUser(uid: String, name: String, latitude: Double, longitude: Double, DoB: Date) -> User {
+    func addUser(uid: String, name: String, latitude: Double, longitude: Double, DoB: Date, email: String) -> User {
         let user = User()
         user.uid = uid
         user.name = name
         user.latitude = latitude
         user.longitude = longitude
         user.DoB = DoB
+        user.email = email
         
         do {
             try userRef?.document(user.uid!).setData(from: user)
@@ -138,7 +139,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
     func parseUsersSnapshot(snapshot: QuerySnapshot) {
         snapshot.documentChanges.forEach { (change) in
             let userID = change.document.documentID
-            print(userID)
+            //print(userID)
 
             let parsedUser = User()
             //timestamp conversion not working
@@ -148,6 +149,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
             parsedUser.longitude = change.document.data()["longitude"] as? Double
             parsedUser.name = change.document.data()["name"] as? String
             parsedUser.uid = change.document.data()["uid"] as? String
+            parsedUser.email = change.document.data()["email"] as? String
     
             if change.type == .added {
                 userList.append(parsedUser)
@@ -199,13 +201,24 @@ class DatabaseController: NSObject, DatabaseProtocol {
           //      print("Unable to decode gamesession. Is the gamesession malformed?")
               //  return
             //}
-            if let playersReferences = change.document.data()["players"] as? [DocumentReference] {
-                for reference in playersReferences {
-                    if let user = getUserByID(reference.documentID) {
-                        gameSession.players?.append(user)
+//            if let playersReferences = change.document.data()["players"] as? [DocumentReference] {
+//                for reference in playersReferences {
+//                    print("references")
+//                    print(reference)
+//                    //if let user = getUserByID(reference.documentID) {
+//                    gameSession.players?.append(reference)
+//                    //}
+//                }
+//        }
+            if gameSession.players == nil{
+                gameSession.players = [String]()
+            }
+                if let players = change.document.data()["players"] as? [String]{
+                    for player in players{
+                        gameSession.players?.append(player)
                     }
                 }
-            }
+            
 
        //  guard let game = gameSession else {
         // print("Document doesn't exist")
@@ -282,28 +295,26 @@ class DatabaseController: NSObject, DatabaseProtocol {
       numberofplayers < gameSession.playersneeded! else {
      return false
      }
-        
-    for player in gameSession.players! {
-            if player.uid == userID {
-                return false
+    if gameSession.players != nil {
+        for player in gameSession.players! {
+                if player == userID {
+                    return false
+                }
             }
-        }
+    }
 
-     if let newPlayerRef = userRef?.document(userID) {
-        gamesessionRef?.document(gameID).updateData(
-     ["players" : FieldValue.arrayUnion([newPlayerRef])]
+     
+    gamesessionRef?.document(gameID).updateData(
+        ["players" : FieldValue.arrayUnion([userID]), "playersneeded": (gameSession.playersneeded! - 1)]
      )
-     }
      return true
      }
     
     func removeUserFromGameSession(user: User, gameSession: GameSession) {
-        if ((gameSession.players?.contains(user)) != nil), let gameID = gameSession.sessionid, let userID = user.uid {
-     if let removedRef = userRef?.document(userID) {
+        if ((gameSession.players?.contains(user.uid!)) != nil), let gameID = gameSession.sessionid, let userID = user.uid {
         gamesessionRef?.document(gameID).updateData(
-     ["players": FieldValue.arrayRemove([removedRef])]
+     ["players": FieldValue.arrayRemove([userID])]
      )
-     }
      }
      }
 }

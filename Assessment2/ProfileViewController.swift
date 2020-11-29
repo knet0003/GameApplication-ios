@@ -38,6 +38,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     var user = User()
     let db = Firestore.firestore()
     weak var databaseController: DatabaseController?
+    @IBOutlet weak var logOutButton: UIButton!
     
     @IBAction func editFields(_ sender: Any) {
         nameLabel.isHidden = true
@@ -56,16 +57,8 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         nameTextField.delegate = self
         nameTextField.isHidden = true
         nameTextField.text = nil
-      //  nameLabel.text = UserDefaults.standard.string(forKey: "Name")!
-       // emailLabel.text  = UserDefaults.standard.string(forKey: "Email")!
-       // dob = UserDefaults.standard.object(forKey: "Dob") as! Date
-       // lat = UserDefaults.standard.double(forKey: "Lat")
-       // long = UserDefaults.standard.double(forKey: "Long")
+        logOutButton.layer.cornerRadius = 5;
         let currentuser = databaseController?.authController.currentUser
-     //   guard let userName = databaseController?.currentUser?.name else{
-     //       return
-      //  }
-      //  nameLabel.text = userName
         guard let email = currentuser?.email else {
             return
         }
@@ -92,7 +85,6 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         let region = MKCoordinateRegion(center: newSelectedCoordinates, span: span)
         self.locationMapView.setRegion(region, animated: true)
         
-//        ageLabel.text = UserDefaults.standard.string(forKey: "Dob")
     }
 
     func textFieldShouldReturn(userText: UITextField) -> Bool {
@@ -150,9 +142,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         } catch {
             print("Log out error: \(error.localizedDescription)")
         }
-        UserDefaults.standard.set(false, forKey: "status")
-        //UserDefaults.standard.set(" ", forKey: "Name")
-        Switcher.updateRootVC()
+        self.performSegue(withIdentifier: "logoutSegue", sender: nil)
         
     }
     

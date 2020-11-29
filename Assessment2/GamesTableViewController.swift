@@ -19,12 +19,26 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
         gameSessions.removeAll()
         let user = Auth.auth().currentUser?.uid
+        
         for game in games {
             if game.sessionowner != user {
-                gameSessions.append(game)
+                if game.players?.contains(user!) == false{
+                    gameSessions.append(game)
+                }
             }
         }
+        let currentUser  = databaseController?.getUserByID(user!)
+        let userlat = currentUser?.latitude
+        let userlong = currentUser?.longitude
         filteredGameSessions = gameSessions
+        filteredGameSessions = filteredGameSessions.sorted(){
+            let coordinate1 = CLLocation(latitude: userlat!, longitude: userlong!)
+            let coordinate2 = CLLocation(latitude: $0.latitude!, longitude: $0.longitude!)
+            let coordinate3 = CLLocation(latitude: $1.latitude!, longitude: $1.longitude!)
+            let distanceInMeters1 = coordinate1.distance(from: coordinate2)
+            let distanceInMeters2 = coordinate1.distance(from: coordinate3)
+            return distanceInMeters1 < distanceInMeters2;
+        }
         tableView.reloadData()
     
     }
@@ -138,6 +152,19 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
                 else {
                     filteredGameSessions = gameSessions
                 }
+        let user = Auth.auth().currentUser?.uid
+        let currentUser  = databaseController?.getUserByID(user!)
+        let userlat = currentUser?.latitude
+        let userlong = currentUser?.longitude
+        filteredGameSessions = gameSessions
+        filteredGameSessions = filteredGameSessions.sorted(){
+            let coordinate1 = CLLocation(latitude: userlat!, longitude: userlong!)
+            let coordinate2 = CLLocation(latitude: $0.latitude!, longitude: $0.longitude!)
+            let coordinate3 = CLLocation(latitude: $1.latitude!, longitude: $1.longitude!)
+            let distanceInMeters1 = coordinate1.distance(from: coordinate2)
+            let distanceInMeters2 = coordinate1.distance(from: coordinate3)
+            return distanceInMeters1 < distanceInMeters2;
+        }
                 tableView.reloadData()
     }
     

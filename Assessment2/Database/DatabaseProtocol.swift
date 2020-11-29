@@ -24,7 +24,7 @@ protocol DatabaseListener: AnyObject {
 protocol DatabaseProtocol: AnyObject {
     func cleanup()
     func addGameSession(game: String, sessionname: String, playersneeded: Int, latitude: Double, longitude: Double, sessiontime: Date, sessionowner: String, gameimage: String) -> GameSession
-    func addUser(uid: String, name: String, latitude: Double, longitude: Double, DoB: Date) -> User
+    func addUser(uid: String, name: String, latitude: Double, longitude: Double, DoB: Date, email: String) -> User
      func addUserToGameSession(user: User, gameSession: GameSession) -> Bool
     func deleteGameSession(gamesession: GameSession)
      func removeUserFromGameSession(user: User, gameSession: GameSession)

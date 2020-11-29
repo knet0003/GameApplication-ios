@@ -18,7 +18,7 @@ class GameSession: NSObject, Codable {
     var sessiontime: Date?
     var sessionowner: String?
     var gameimage: String?
-    var players: [User]?
+    var players: [String]?
     
 
      private enum CodingKeys: String, CodingKey {
