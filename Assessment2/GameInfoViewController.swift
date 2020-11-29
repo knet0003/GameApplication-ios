@@ -41,6 +41,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
     @IBOutlet weak var stepper: UIStepper!
     override func viewDidLoad() {
         super.viewDidLoad()
+        joinButton.layer.cornerRadius = 5;
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         sessionNameTextField.delegate = self
         databaseController = appDelegate.databaseController
@@ -73,7 +74,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
         if gameSession?.players?.count != nil {
             let players = gameSession?.players
             for player in players! {
-                userList.append(player)
+                userList.append((self.databaseController?.getUserByID(player))!)
             }
         }
         //let userlong = UserDefaults.standard.double(forKey: "Long")
@@ -230,12 +231,14 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
 
         if let location = sourcePlacemark.location {
             sourceAnnotation.coordinate = location.coordinate
+            sourceAnnotation.title = "Home"
         }
 
         let destinationAnnotation = MKPointAnnotation()
 
         if let location = destinationPlacemark.location {
             destinationAnnotation.coordinate = location.coordinate
+            destinationAnnotation.title = "Game Location"
         }
 
         self.locationMapView.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )

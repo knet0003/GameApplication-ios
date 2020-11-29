@@ -7,9 +7,11 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class HomeViewController: UIViewController, DatabaseListener {
     var listenerType: ListenerType = .all
+    var user = User()
     
     func onUserChange(change: DatabaseChange, users: [User]) {
         
@@ -20,30 +22,34 @@ class HomeViewController: UIViewController, DatabaseListener {
     }
     
 
+    @IBOutlet weak var joinGameButton: UIButton!
     @IBOutlet weak var WelcomeLabel: UILabel!
     weak var databaseController: DatabaseController?
   //  var currentSender: Sender?
     
     override func viewDidLoad() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-         databaseController = appDelegate.databaseController
         super.viewDidLoad()
+        joinGameButton.layer.cornerRadius = 5;
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
         //self.currentSender = Sender(id: UserDefaults.standard.object(forKey: "Uid") as! String, name: UserDefaults.standard.string(forKey: "Name")!)
-       // let currentauthuser = databaseController?.authController.currentUser
-      //  let currentuser = databaseController?.getUserByID(currentauthuser!.uid)
-        let name = UserDefaults.standard.string(forKey: "Name")
+        let currentauthuser = databaseController?.authController.currentUser
+        //print(currentauthuser?.uid)
+        user = (databaseController?.getUserByID(currentauthuser!.uid as String))!
+        //print(user.name)
+        let name = user.name
         WelcomeLabel.text?.append(name!)
         // Do any additional setup after loading the view.
     }
-    override func viewWillAppear(_ animated: Bool) {
-     super.viewWillAppear(animated)
-     databaseController?.addListener(listener: self)
-     }
-
-     override func viewWillDisappear(_ animated: Bool) {
-     super.viewWillDisappear(animated)
-     databaseController?.removeListener(listener: self)
-     }
+//    override func viewWillAppear(_ animated: Bool) {
+//     super.viewWillAppear(animated)
+//     databaseController?.addListener(listener: self)
+//     }
+//
+//     override func viewWillDisappear(_ animated: Bool) {
+//     super.viewWillDisappear(animated)
+//     databaseController?.removeListener(listener: self)
+//     }
 
     /*
     // MARK: - Navigation

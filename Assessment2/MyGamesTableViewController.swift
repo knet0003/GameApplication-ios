@@ -53,6 +53,9 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
             if game.sessionowner == user {
                 gameSessions.append(game)
             }
+            else if game.players?.contains(user!) == true {
+                gameSessions.append(game)
+            }
         }
         filteredGameSessions = gameSessions
         self.tableView.reloadData()
@@ -106,6 +109,9 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
         let user = Auth.auth().currentUser?.uid
         for game in allgames {
             if game.sessionowner == user {
+                gameSessions.append(game)
+            }
+            else if game.players?.contains(user!) == true {
                 gameSessions.append(game)
             }
         }

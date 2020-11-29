@@ -46,9 +46,11 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     let locationManager = CLLocationManager()
     
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var selectGameButton: UIButton!
     
     var selectedGameName: String?
     var selectedGameImage: String?
+    var user = User()
     
     weak var databaseController: DatabaseController?
     
@@ -56,6 +58,10 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        saveButton.layer.cornerRadius = 5;
+        selectGameButton.layer.cornerRadius = 5;
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         self.locationManager.distanceFilter = kCLDistanceFilterNone
@@ -69,12 +75,19 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         longtap.minimumPressDuration = 0.6
         gameNameLabel.text = " "
         locationMapView.addGestureRecognizer(longtap)
+        let currentuser = databaseController?.authController.currentUser
+        user  = (databaseController?.getUserByID(currentuser!.uid))!
+        let center = CLLocationCoordinate2D(latitude: user.latitude!, longitude: (user.longitude)!)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)) //zoom on map
+        self.locationMapView.setRegion(region, animated: true)
+        annotation.coordinate = center
+        annotation.title = "Home"
+        self.locationMapView.addAnnotation(annotation)
+        
         sessionDatepicker.minimumDate = Date()
         
         sessionNameTextField.delegate = self
         
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-         databaseController = appDelegate.databaseController
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -92,13 +105,13 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     } */
     
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-            let location = locations.last
-            let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: (location?.coordinate.longitude)!)
-            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)) //zoom on map
-            self.locationMapView.setRegion(region, animated: true)
-    }
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//
+//            let location = locations.last
+//            let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: (location?.coordinate.longitude)!)
+//            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)) //zoom on map
+//            self.locationMapView.setRegion(region, animated: true)
+//    }
     
     
     

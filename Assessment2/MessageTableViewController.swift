@@ -25,6 +25,8 @@ class MessageTableViewController: UITableViewController, DatabaseListener {
     let CHANNEL_CELL = "channelCell"
     var currentSender: Sender?
     var channels = [Channel]()
+    var user = User()
+    var presentUserList = [String]()
 
      var channelsRef: CollectionReference?
      var databaseListener: ListenerRegistration?
@@ -34,10 +36,12 @@ class MessageTableViewController: UITableViewController, DatabaseListener {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
-        let currentuserid = Auth.auth().currentUser!.uid
-        let user = databaseController?.getUserByID(currentuserid)
-        self.currentSender = Sender(id: currentuserid , name: user!.name!)
-        print(self.currentSender?.displayName as Any)
+        //let currentuserid = Auth.auth().currentUser!.uid
+        let currentuser = databaseController?.authController.currentUser
+        user  = (databaseController?.getUserByID(currentuser!.uid))!
+        presentUserList.append(currentuser!.uid)
+        self.currentSender = Sender(id: currentuser!.uid , name: user.name!)
+        //print(self.currentSender?.displayName as Any)
         
         let database = Firestore.firestore()
          channelsRef = database.collection("channels")
@@ -63,11 +67,20 @@ class MessageTableViewController: UITableViewController, DatabaseListener {
             self.channels.removeAll()
             
             querySnapshot?.documents.forEach({snapshot in
-                let id = snapshot.documentID
-                let name = snapshot["Name"] as! String
-                let channel = Channel(id: id, name: name)
-                
-                self.channels.append(channel)
+                if snapshot["uid1"] as! String == self.user.uid{
+                    let id = snapshot.documentID
+                    let otherUser = self.databaseController?.getUserByID(snapshot["uid2"] as! String)
+                    self.presentUserList.append(otherUser!.uid!)
+                    let channel = Channel(id: id, name: (otherUser?.name!)!)
+                    self.channels.append(channel)
+                }
+                else if snapshot["uid2"] as! String == self.user.uid{
+                    let id = snapshot.documentID
+                    let otherUser = self.databaseController?.getUserByID(snapshot["uid1"] as! String)
+                    self.presentUserList.append(otherUser!.uid!)
+                    let channel = Channel(id: id, name: (otherUser?.name!)!)
+                    self.channels.append(channel)
+                }
             })
             
             self.tableView.reloadData()
@@ -118,6 +131,9 @@ class MessageTableViewController: UITableViewController, DatabaseListener {
         performSegue(withIdentifier: CHANNEL_SEGUE, sender: channel)
     }
 
+    @IBAction func newMessage(_ sender: Any) {
+        performSegue(withIdentifier: "newMessageSegue", sender: sender)
+    }
     /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -145,6 +161,10 @@ class MessageTableViewController: UITableViewController, DatabaseListener {
 
          destinationVC.sender = currentSender
          destinationVC.currentChannel = channel
+         }
+        if segue.identifier == "newMessageSegue" {
+         let destinationVC = segue.destination as! SelectUserTableViewController
+         destinationVC.presentUserList = presentUserList
          }
     }
     

@@ -32,6 +32,7 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         super.viewDidLoad()
+        registerButton.layer.cornerRadius = 5;
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 10
         locationManager.delegate = self
@@ -143,7 +144,7 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
                 self.displayErrorMessage(error.localizedDescription)
             }
             else{
-                databaseController?.addUser(uid: (user?.user.uid)!, name: name, latitude: self.annotation.coordinate.latitude, longitude: self.annotation.coordinate.longitude, DoB: Dob)
+                databaseController?.addUser(uid: (user?.user.uid)!, name: name, latitude: self.annotation.coordinate.latitude, longitude: self.annotation.coordinate.longitude, DoB: Dob, email: email)
                /* let db = Firestore.firestore()
                // db.collection("users").document(user!.user.uid).setData([
                                                             "name": name,

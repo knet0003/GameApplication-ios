@@ -15,6 +15,7 @@ class User: NSObject, Codable {
     var longitude: Double?
   //  var profileImage: String?
     var DoB: Date?
+    var email: String?
     
 
      private enum CodingKeys: String, CodingKey {
@@ -24,5 +25,6 @@ class User: NSObject, Codable {
         case longitude
     //    case profileImage
         case DoB
+        case email
      }
 }
