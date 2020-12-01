@@ -29,6 +29,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var user = User()
     var gameSessions = [GameSession]()
     var gameSessionIds = [String]()
+    var center = UNUserNotificationCenter.current()
     
     func onUserChange(change: DatabaseChange, users: [User]) {
         
@@ -41,11 +42,23 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let userlat = currentUser?.latitude
         let userlong = currentUser?.longitude
             for game in games{
+                if game.sessionowner != user {
                 if gameSessionIds.contains(game.sessionid!) == false{
                     let coordinate1 = CLLocation(latitude: userlat!, longitude: userlong!)
                     let coordinate2 = CLLocation(latitude: game.latitude!, longitude: game.longitude!)
                     let distanceInKms = coordinate1.distance(from: coordinate2)/1000
                     if distanceInKms <= 100 {
+                        let content = UNMutableNotificationContent()
+                        content.title = "New Game"
+                        content.body = game.gamename! + " " + game.sessionname!
+                        content.badge = 1
+                        let date = Date()
+                        print(date)
+                        let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+                        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+                        let uuidString = UUID().uuidString
+                        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
+                        center.add(request){(error) in }
                         let alert = UIAlertController(title: "New Game", message:
                                                         game.gamename! + " " + game.sessionname!, preferredStyle:
                             UIAlertController.Style.alert)
@@ -54,6 +67,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.present(alert, animated: true, completion: nil)
                         databaseController?.database.collection("notifications").addDocument(data: ["Title": "New Game", "gameid": game.sessionid!,"uid": user ])
                     }
+                }
                 }
             }
         gameSessions.removeAll()
@@ -95,8 +109,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         gamesTable.delegate = self;
         gamesTable.dataSource = self;
         gamesTable.tableFooterView = UIView(frame: .zero)
-        let center = UNUserNotificationCenter.current()
-        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
             
         }
         joinGameButton.layer.cornerRadius = 5;
