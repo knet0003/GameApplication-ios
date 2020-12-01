@@ -20,8 +20,8 @@ class GameSession: NSObject, Codable {
     var gameimage: String?
     var players: [String]?
     
-
-     private enum CodingKeys: String, CodingKey {
+    
+    private enum CodingKeys: String, CodingKey {
         case sessionid
         case gamename
         case sessionname
@@ -32,5 +32,5 @@ class GameSession: NSObject, Codable {
         case sessionowner
         case gameimage
         case players
-     }
+    }
 }

@@ -23,7 +23,7 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-         databaseController = appDelegate.databaseController
+        databaseController = appDelegate.databaseController
         let database = Firestore.firestore()
         let settings = database.settings
         settings.areTimestampsInSnapshotsEnabled = true
@@ -37,10 +37,10 @@ class SignInViewController: UIViewController {
                                                             if user != nil {
                                                                 self.channelsRef?.whereField("uid", isEqualTo: user!.uid).getDocuments(){(querySnapshot,err) in
                                                                     if let err = err {
-                                                                                print("Error getting documents: \(err)")
-                                                                            } else {
-                                                                                    self.performSegue(withIdentifier: "loginSegue", sender: nil)
-                                                                            }
+                                                                        print("Error getting documents: \(err)")
+                                                                    } else {
+                                                                        self.performSegue(withIdentifier: "loginSegue", sender: nil)
+                                                                    }
                                                                 }
                                                             }})
         
@@ -48,9 +48,9 @@ class SignInViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-     super.viewWillDisappear(animated)
-     Auth.auth().removeStateDidChangeListener(handle!)
-     }
+        super.viewWillDisappear(animated)
+        Auth.auth().removeStateDidChangeListener(handle!)
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -83,15 +83,15 @@ class SignInViewController: UIViewController {
                 if user != nil {
                     self.channelsRef?.whereField("uid", isEqualTo: user?.user.uid as Any).getDocuments(){(querySnapshot,err) in
                         if let err = err {
-                                    print("Error getting documents: \(err)")
-                                } else {
-                                    for document in querySnapshot!.documents {
-                                        let name = document.get("name") as? String
-                                        self.currentSender = Sender(id: (user?.user.uid)!, name: name!)
-                                        
-                                    }}}}
+                            print("Error getting documents: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                let name = document.get("name") as? String
+                                self.currentSender = Sender(id: (user?.user.uid)!, name: name!)
+                                
+                            }}}}
                 
-//                self.navigationController?.popViewController(animated: true)
+                //                self.navigationController?.popViewController(animated: true)
             }
             
         }

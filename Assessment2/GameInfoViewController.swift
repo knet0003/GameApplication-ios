@@ -16,7 +16,7 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
     var button_defaultmode: String = "edit"
     var lat: Double = 0
     var long: Double = 0
-
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var gameNameLabel: UILabel!
     @IBOutlet weak var gameOwnerLabel: UILabel!
@@ -51,7 +51,7 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
         joinUsersTable.delegate = self;
         joinUsersTable.dataSource = self;
         joinUsersTable.tableFooterView = UIView(frame: .zero)
-//        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height+100)
+        //        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height+100)
         joinButton.layer.cornerRadius = 5;
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         sessionNameTextField.delegate = self
@@ -99,7 +99,7 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
         self.joinUsersTable.reloadData()
         //let userlong = UserDefaults.standard.double(forKey: "Long")
         let userLocation = CLLocationCoordinate2DMake(userlat!, userlong!)
-       // annotation = userLocation
+        // annotation = userLocation
         let sessionlat = gameSession?.latitude
         let sessionlong = gameSession?.longitude
         let sessionlocation = CLLocationCoordinate2DMake(sessionlat!, sessionlong!)
@@ -118,14 +118,14 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Table view data source
     
     func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection
-    section: Int) -> Int {
-    return userList.count
+                    section: Int) -> Int {
+        return userList.count
     }
-      
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "playersCell", for: indexPath)
         let user = userList[indexPath.row]
@@ -135,11 +135,11 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email
         return cell
-      }
+    }
     
     // DatabaseListener methods
     func onUserChange(change: DatabaseChange, users: [User]) {
-
+        
         
     }
     
@@ -162,7 +162,7 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
             return
         }
         if databaseController?.addUserToGameSession(user: currentUser, gameSession: gameSession!) == true {
-        displayMessage(title: "Join successful", message: "You have successfully joined the session")
+            displayMessage(title: "Join successful", message: "You have successfully joined the session")
         } else {
             displayMessage(title: "Error in joining", message: "You could not join the session")
         }
@@ -177,9 +177,9 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
             sessionNameTextField.borderStyle = .roundedRect
             sessionNameTextField.isUserInteractionEnabled = true
             //UITextField *yourTextField = [[UITextField alloc]init];
-    //        CGFloat yourSelectedFontSize = 14.0 ;
-    //        UIFont *yourNewSameStyleFont = [sessionNameTextField.font fontWithSize:yourSelectedFontSize];
-    //        sessionNameTextField.font = yourNewSameStyleFont ;
+            //        CGFloat yourSelectedFontSize = 14.0 ;
+            //        UIFont *yourNewSameStyleFont = [sessionNameTextField.font fontWithSize:yourSelectedFontSize];
+            //        sessionNameTextField.font = yourNewSameStyleFont ;
             sessionNameTextField.font =  UIFont.init(name: (sessionNameTextField.font?.fontName)!, size: 14.0)
             sessionTimeDatepicker.isHidden = false
             editButton.title = "Done"
@@ -196,7 +196,7 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
             db.collection("games").document(sessionid).updateData(["latitude": lat, "longitude": long])
             guard let playersneeded = playersLabel.text else {
                 displayMessage(title: "No player number", message: "Please add how many players you need")
-                 return
+                return
             }
             let playersnumber = Int(playersneeded) ?? 1
             db.collection("games").document(sessionid).updateData(["playersneeded": playersnumber])
@@ -208,9 +208,9 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
             sessionNameTextField.borderStyle = .none
             sessionNameTextField.isUserInteractionEnabled = false
             //UITextField *yourTextField = [[UITextField alloc]init];
-    //        CGFloat yourSelectedFontSize = 14.0 ;
-    //        UIFont *yourNewSameStyleFont = [sessionNameTextField.font fontWithSize:yourSelectedFontSize];
-    //        sessionNameTextField.font = yourNewSameStyleFont ;
+            //        CGFloat yourSelectedFontSize = 14.0 ;
+            //        UIFont *yourNewSameStyleFont = [sessionNameTextField.font fontWithSize:yourSelectedFontSize];
+            //        sessionNameTextField.font = yourNewSameStyleFont ;
             sessionNameTextField.font =  UIFont.init(name: (sessionNameTextField.font?.fontName)!, size: 17.0)
             sessionTimeDatepicker.isHidden = true
             editButton.title = "Edit"
@@ -222,8 +222,8 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func textFieldShouldReturn(userText: UITextField) -> Bool {
-            userText.resignFirstResponder()
-            return true
+        userText.resignFirstResponder()
+        return true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -242,113 +242,113 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
             let lengthToReplace = range.length
             newLength = startingLength + lengthToAdd - lengthToReplace
         }
-      return newLength > characterCountLimit
+        return newLength > characterCountLimit
     }
     
     @IBAction func addAnnotationOnLongPress(gesture: UILongPressGestureRecognizer) {
-       // self.locationMapView.removeAnnotation(annotation)
+        // self.locationMapView.removeAnnotation(annotation)
         if gesture.state == .ended {
             let point = gesture.location(in: self.locationMapView)
             let coordinate = self.locationMapView.convert(point, toCoordinateFrom: self.locationMapView)
             let newSessionLocation = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude)
-           // annotation = mkp
+            // annotation = mkp
             let currentuserid = Auth.auth().currentUser?.uid
             if button_defaultmode == "save" {
-            if currentuserid == gameSession?.sessionowner {
-            let userlat = databaseController?.getUserByID(currentuserid!)?.latitude
-            let userlong = databaseController?.getUserByID(currentuserid!)?.longitude
-            
-            let userlocation = CLLocationCoordinate2DMake(userlat!, userlong!)
-            let ann = locationMapView.annotations
-            let overlays = locationMapView.overlays
-            for overlay in overlays {
-                locationMapView.removeOverlay(overlay)
-            }
-            for a in ann {
-                locationMapView.removeAnnotation(a)
-            }
-            showRouteOnMap(pickupCoordinate: userlocation, destinationCoordinate: newSessionLocation)
-            
-            lat = Double(newSessionLocation.latitude)
-            long = Double(newSessionLocation.longitude)
-            
+                if currentuserid == gameSession?.sessionowner {
+                    let userlat = databaseController?.getUserByID(currentuserid!)?.latitude
+                    let userlong = databaseController?.getUserByID(currentuserid!)?.longitude
+                    
+                    let userlocation = CLLocationCoordinate2DMake(userlat!, userlong!)
+                    let ann = locationMapView.annotations
+                    let overlays = locationMapView.overlays
+                    for overlay in overlays {
+                        locationMapView.removeOverlay(overlay)
+                    }
+                    for a in ann {
+                        locationMapView.removeAnnotation(a)
+                    }
+                    showRouteOnMap(pickupCoordinate: userlocation, destinationCoordinate: newSessionLocation)
+                    
+                    lat = Double(newSessionLocation.latitude)
+                    long = Double(newSessionLocation.longitude)
+                    
                 }
             }
         }
-            }
+    }
     
     //Code source: https://stackoverflow.com/questions/29319643/how-to-draw-a-route-between-two-locations-using-mapkit-in-swift
     
     func showRouteOnMap(pickupCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
-
+        
         let sourcePlacemark = MKPlacemark(coordinate: pickupCoordinate, addressDictionary: nil)
         let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate, addressDictionary: nil)
-
+        
         let sourceMapItem = MKMapItem(placemark: sourcePlacemark)
         let destinationMapItem = MKMapItem(placemark: destinationPlacemark)
-
+        
         let sourceAnnotation = MKPointAnnotation()
-
+        
         if let location = sourcePlacemark.location {
             sourceAnnotation.coordinate = location.coordinate
             sourceAnnotation.title = "Home"
         }
-
+        
         let destinationAnnotation = MKPointAnnotation()
-
+        
         if let location = destinationPlacemark.location {
             destinationAnnotation.coordinate = location.coordinate
             destinationAnnotation.title = "Game Location"
         }
-
+        
         self.locationMapView.showAnnotations([sourceAnnotation,destinationAnnotation], animated: true )
-
+        
         let directionRequest = MKDirections.Request()
         directionRequest.source = sourceMapItem
         directionRequest.destination = destinationMapItem
         directionRequest.transportType = .automobile
-
+        
         // Calculate the direction
         let directions = MKDirections(request: directionRequest)
         directions.calculate {
             (response, error) -> Void in
-
+            
             guard let response = response else {
                 if let error = error {
                     print("Error: \(error)")
                 }
-
+                
                 return
             }
-
+            
             let route = response.routes[0]
-
+            
             self.locationMapView.addOverlay((route.polyline), level: MKOverlayLevel.aboveRoads)
-
+            
             let rect = route.polyline.boundingMapRect
             self.locationMapView.setRegion(MKCoordinateRegion(rect), animated: true)
         }
     }
-
+    
     // MARK: - MKMapViewDelegate
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-
+        
         let renderer = MKPolylineRenderer(overlay: overlay)
-
+        
         renderer.strokeColor = UIColor(red: 17.0/255.0, green: 147.0/255.0, blue: 255.0/255.0, alpha: 1)
-
+        
         renderer.lineWidth = 5.0
-
-    return renderer
+        
+        return renderer
     }
     
     
     // MARK - Utility function
     func displayMessage(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message,
-        preferredStyle: UIAlertController.Style.alert)
+                                                preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss",
-        style: UIAlertAction.Style.default,handler: nil))
+                                                style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
 }

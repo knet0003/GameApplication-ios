@@ -40,7 +40,7 @@ class ChatMessagesViewController: MessagesViewController, MessagesDataSource,
         messageInputBar.delegate = self
         if currentChannel != nil {
             let database = Firestore.firestore()
-        channelRef = database.collection("channels")
+            channelRef = database.collection("channels")
                 .document(currentChannel!.id).collection("messages")
             navigationItem.title = "\(currentChannel!.name)"
         }

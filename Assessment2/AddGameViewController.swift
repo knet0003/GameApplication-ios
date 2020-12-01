@@ -55,7 +55,7 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     weak var databaseController: DatabaseController?
     
     let annotation = MKPointAnnotation()
-
+    
     override func viewDidLoad() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .darkGray
@@ -96,27 +96,27 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     }
     
     override func viewWillAppear(_ animated: Bool) {
-     super.viewWillAppear(animated)
-     locationManager.startUpdatingLocation()
-     }
+        super.viewWillAppear(animated)
+        locationManager.startUpdatingLocation()
+    }
     
     override func viewDidDisappear(_ animated: Bool) {
-     super.viewWillDisappear(animated)
-     locationManager.stopUpdatingLocation()
-     }
+        super.viewWillDisappear(animated)
+        locationManager.stopUpdatingLocation()
+    }
     
-  /*  override func didReceiveMemoryWarning() {
-             super.didReceiveMemoryWarning()
-    } */
+    /*  override func didReceiveMemoryWarning() {
+     super.didReceiveMemoryWarning()
+     } */
     
     
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//
-//            let location = locations.last
-//            let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: (location?.coordinate.longitude)!)
-//            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)) //zoom on map
-//            self.locationMapView.setRegion(region, animated: true)
-//    }
+    //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    //
+    //            let location = locations.last
+    //            let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: (location?.coordinate.longitude)!)
+    //            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)) //zoom on map
+    //            self.locationMapView.setRegion(region, animated: true)
+    //    }
     
     
     
@@ -151,33 +151,33 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         
         guard let user = Auth.auth().currentUser?.uid else {
             displayMessage(title: "Not logged in", message: "Please log in first to create a new game session")
-             return
+            return
         }
         
         guard let playersneeded = playersNeededLabel.text else {
             displayMessage(title: "No player number", message: "Please add how many players you need")
-             return
+            return
         }
         let latitude = annotation.coordinate.latitude
         let longitude = annotation.coordinate.longitude
         if longitude != 0 && longitude != 0 {
         } else {
             displayMessage(title: "No location selected", message: "Please select a session location from the map")
-             return
+            return
         }
         guard let gameimage = selectedGameImage else {
             displayMessage(title: "No game image", message: "Please add image")
-             return
+            return
         }
         let playersnumber = Int(playersneeded) ?? 1
         if let game = databaseController?.addGameSession(game: gamename, sessionname: sessionname, playersneeded: playersnumber, latitude: latitude, longitude: longitude, sessiontime: sessionTime, sessionowner: user, gameimage: gameimage), game != nil {
-              displayMessage(title: "Session Added", message: "You successfully created a session!")
-           // navigationController?.popViewController(animated: true)
-        sessionNameTextField.text?.removeAll()
-        gameNameLabel.text = "  "
-        playersNeededLabel.text = "1"
-      //  sessionDatepicker.date = Date()
-        locationMapView.removeAnnotation(annotation)
+            displayMessage(title: "Session Added", message: "You successfully created a session!")
+            // navigationController?.popViewController(animated: true)
+            sessionNameTextField.text?.removeAll()
+            gameNameLabel.text = "  "
+            playersNeededLabel.text = "1"
+            //  sessionDatepicker.date = Date()
+            locationMapView.removeAnnotation(annotation)
             navigationController?.popViewController(animated: true)
         }
     }
@@ -194,9 +194,9 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     // MARK - Utility function
     func displayMessage(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message,
-        preferredStyle: UIAlertController.Style.alert)
+                                                preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss",
-        style: UIAlertAction.Style.default,handler: nil))
+                                                style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
@@ -206,17 +206,17 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-           textField.resignFirstResponder()
-           return true
-       }
+        textField.resignFirstResponder()
+        return true
+    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-              if segue.identifier == "searchGame" {
-                  let destination = segue.destination as! SelectGameTableViewController
-                  destination.delegate = self
-              }
-          }
+        if segue.identifier == "searchGame" {
+            let destination = segue.destination as! SelectGameTableViewController
+            destination.delegate = self
+        }
+    }
     
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let characterCountLimit = 30
@@ -225,8 +225,8 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         let lengthToAdd = string.count
         let lengthToReplace = range.length
         let newLength = startingLength + lengthToAdd - lengthToReplace
-      return newLength < characterCountLimit
+        return newLength < characterCountLimit
     }
-
+    
     
 }

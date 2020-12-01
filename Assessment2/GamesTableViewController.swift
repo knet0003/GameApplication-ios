@@ -19,11 +19,13 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
         gameSessions.removeAll()
         let user = Auth.auth().currentUser?.uid
-        
+        let date = Date()
         for game in games {
-            if game.sessionowner != user {
-                if game.players?.contains(user!) == false{
-                    gameSessions.append(game)
+            if date < game.sessiontime! as Date{
+                if game.sessionowner != user {
+                    if game.players?.contains(user!) == false{
+                        gameSessions.append(game)
+                    }
                 }
             }
         }
@@ -40,17 +42,17 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
             return distanceInMeters1 < distanceInMeters2;
         }
         tableView.reloadData()
-    
+        
     }
-
+    
     
     var gameSessions: [GameSession] = []
     var filteredGameSessions: [GameSession] = []
     weak var databaseController: DatabaseController?
     
     
-   // weak var databaseController = DatabaseController()
-
+    // weak var databaseController = DatabaseController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let appearance = UINavigationBarAppearance()
@@ -59,24 +61,24 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-         databaseController = appDelegate.databaseController
+        databaseController = appDelegate.databaseController
         gameSessions = databaseController!.gamesessionList
         let searchController = UISearchController(searchResultsController: nil)
-                searchController.searchResultsUpdater = self
-                searchController.obscuresBackgroundDuringPresentation = false
-                searchController.searchBar.placeholder = "Search Game sessions"
-                navigationItem.searchController = searchController
-                definesPresentationContext = true
-                tableView.tableFooterView = UIView()
-//        let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Game sessions"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        tableView.tableFooterView = UIView()
+        //        let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
         let searchField = searchController.searchBar.searchTextField
         searchField.backgroundColor = .systemBackground
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
-
-            
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
@@ -86,21 +88,21 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
     }
     override func viewWillDisappear(_ animated: Bool) {
         databaseController?.removeListener(listener: self)
-       // gameSessions.removeAll()
-       // filteredGameSessions.removeAll()
+        // gameSessions.removeAll()
+        // filteredGameSessions.removeAll()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredGameSessions.count
     }
-
-
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "gameCell", for: indexPath) as! GamesTableViewCell
@@ -122,7 +124,7 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
         dateFormatter.dateFormat = "hh:mm dd-MM-yyyy"
         let sessiontime = dateFormatter.string(from: currentCell.sessiontime!)
         cell.sessionTimeLabel.text = "Time: " + sessiontime
-      //  cell.gameImage.image =
+        //  cell.gameImage.image =
         return cell
     }
     
@@ -132,34 +134,34 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
         
     }
     
-
+    
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showGameInfo" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                        let controller = segue.destination as! GameInfoViewController
-                    controller.gameSession = filteredGameSessions[indexPath.row]
-                    }
+                let controller = segue.destination as! GameInfoViewController
+                controller.gameSession = filteredGameSessions[indexPath.row]
+            }
         }
     }
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text?.lowercased()
-                    else {
-                        return
-                }
-
-                if searchText.count > 0 {
-                    filteredGameSessions = gameSessions.filter({ (gameSession: GameSession) -> Bool in
-                        return (gameSession.gamename!.lowercased().contains(searchText.lowercased()) )
-                    })
-                }
-                else {
-                    filteredGameSessions = gameSessions
-                }
+        else {
+            return
+        }
+        
+        if searchText.count > 0 {
+            filteredGameSessions = gameSessions.filter({ (gameSession: GameSession) -> Bool in
+                return (gameSession.gamename!.lowercased().contains(searchText.lowercased()) )
+            })
+        }
+        else {
+            filteredGameSessions = gameSessions
+        }
         let user = Auth.auth().currentUser?.uid
         let currentUser  = databaseController?.getUserByID(user!)
         let userlat = currentUser?.latitude
@@ -173,9 +175,9 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
             let distanceInMeters2 = coordinate1.distance(from: coordinate3)
             return distanceInMeters1 < distanceInMeters2;
         }
-                tableView.reloadData()
+        tableView.reloadData()
     }
     
-
-
+    
+    
 }

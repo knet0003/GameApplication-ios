@@ -18,12 +18,12 @@ class GameData: NSObject, Decodable {
     }
     
     required init(from decoder: Decoder) throws {
-     let cardContainer = try decoder.container(keyedBy: RootKeys.self)
-
-     name = try cardContainer.decode(String.self, forKey: .name)
-    imageURL = try? cardContainer.decode(String.self, forKey: .imageURL)
-
-     }
+        let cardContainer = try decoder.container(keyedBy: RootKeys.self)
+        
+        name = try cardContainer.decode(String.self, forKey: .name)
+        imageURL = try? cardContainer.decode(String.self, forKey: .imageURL)
+        
+    }
     
 }
 

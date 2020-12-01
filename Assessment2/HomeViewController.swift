@@ -36,13 +36,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
-
+        
         let user = Auth.auth().currentUser?.uid
         let currentUser  = databaseController?.getUserByID(user!)
         let userlat = currentUser?.latitude
         let userlong = currentUser?.longitude
-            for game in games{
-                if game.sessionowner != user {
+        for game in games{
+            if game.sessionowner != user {
                 if gameSessionIds.contains(game.sessionid!) == false{
                     let coordinate1 = CLLocation(latitude: userlat!, longitude: userlong!)
                     let coordinate2 = CLLocation(latitude: game.latitude!, longitude: game.longitude!)
@@ -61,15 +61,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         center.add(request){(error) in }
                         let alert = UIAlertController(title: "New Game", message:
                                                         game.gamename! + " " + game.sessionname!, preferredStyle:
-                            UIAlertController.Style.alert)
+                                                            UIAlertController.Style.alert)
                         alert.addAction(UIAlertAction(title: "Ok", style:
-                            UIAlertAction.Style.default, handler: nil))
+                                                        UIAlertAction.Style.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
                         databaseController?.database.collection("notifications").addDocument(data: ["Title": "New Game", "gameid": game.sessionid!,"uid": user, "time": date ])
                     }
                 }
-                }
             }
+        }
         gameSessions.removeAll()
         gameSessionIds.removeAll()
         
@@ -92,12 +92,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-
+    
     @IBOutlet weak var gamesTable: UITableView!
     @IBOutlet weak var joinGameButton: UIButton!
     @IBOutlet weak var WelcomeLabel: UILabel!
     weak var databaseController: DatabaseController?
-  //  var currentSender: Sender?
+    //  var currentSender: Sender?
     
     override func viewDidLoad() {
         let appearance = UINavigationBarAppearance()
@@ -124,27 +124,27 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         WelcomeLabel.text?.append(name!)
         // Do any additional setup after loading the view.
     }
-
+    
     
     override func viewWillAppear(_ animated: Bool) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         databaseController?.addListener(listener: self)
-       // loadAllGames()
+        // loadAllGames()
     }
     override func viewWillDisappear(_ animated: Bool) {
         databaseController?.removeListener(listener: self)
         gameSessions.removeAll()
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

@@ -9,8 +9,8 @@ import UIKit
 
 class VolumeData: NSObject , Decodable {
     var games: [GameData]?
-
+    
     private enum CodingKeys: String, CodingKey {
-    case games
+        case games
     }
 }
