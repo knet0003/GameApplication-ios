@@ -119,6 +119,21 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
         for game in allgames {
             if game.sessionowner == user {
                 gameSessions.append(game)
+                let dateFormatter = DateFormatter()
+                let date = Date()
+                dateFormatter.dateFormat = "dd-MM-yyyy"
+                let currentDate = dateFormatter.string(from: date)
+                let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
+                if currentDate == sessionDate {
+                    let alert = UIAlertController(title: "Game Today", message:
+                                                    game.gamename! + " " + game.sessionname!, preferredStyle:
+                        UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style:
+                        UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+                    
+                }
             }
             else if game.players?.contains(user!) == true {
                 gameSessions.append(game)

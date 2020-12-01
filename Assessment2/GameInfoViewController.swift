@@ -253,6 +253,7 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
             let newSessionLocation = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude)
            // annotation = mkp
             let currentuserid = Auth.auth().currentUser?.uid
+            if button_defaultmode == "save" {
             if currentuserid == gameSession?.sessionowner {
             let userlat = databaseController?.getUserByID(currentuserid!)?.latitude
             let userlong = databaseController?.getUserByID(currentuserid!)?.longitude
@@ -272,6 +273,7 @@ class GameInfoViewController: UIViewController, UITableViewDelegate, UITableView
             long = Double(newSessionLocation.longitude)
             
                 }
+            }
         }
             }
     
