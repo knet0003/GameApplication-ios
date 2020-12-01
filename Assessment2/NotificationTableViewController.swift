@@ -21,7 +21,7 @@ class NotificationTableViewController: UITableViewController, DatabaseListener {
         
     }
     var user = User()
-    var channels = [Channel]()
+    var channels = [Notification]()
     var channelsRef: CollectionReference?
     var databaseListener: ListenerRegistration?
     weak var databaseController: DatabaseController?
@@ -64,11 +64,16 @@ class NotificationTableViewController: UITableViewController, DatabaseListener {
             querySnapshot?.documents.forEach({snapshot in
                 if snapshot["uid"] as! String == self.user.uid{
                     let id = snapshot["Title"]
+                    let time = snapshot["time"] as! Timestamp?
+                    let date = time?.dateValue()
                     let game = self.databaseController?.getGameByID(snapshot["gameid"] as! String)
-                    let channel = Channel(id: id as! String, name: (game?.sessionname!)!)
+                    let channel = Notification(id: id as! String, name: (game?.sessionname!)!, date: date!)
                     self.channels.append(channel)
                 }
             })
+            self.channels = self.channels.sorted(){
+                return $0.date > $1.date;
+            }
             
             self.tableView.reloadData()
         }
