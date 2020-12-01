@@ -48,6 +48,11 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     
     
     override func viewDidLoad() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .darkGray
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.green, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 24)]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          databaseController = appDelegate.databaseController
         var dob: Date?
