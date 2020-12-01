@@ -8,16 +8,19 @@
 import UIKit
 import CoreData
 import Firebase
+import CoreLocation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    let locationManager: CLLocationManager = CLLocationManager()
     var databaseController: DatabaseController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         databaseController = DatabaseController()
+        
         return true
     }
 
