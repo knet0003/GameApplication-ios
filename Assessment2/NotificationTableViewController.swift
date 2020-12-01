@@ -19,7 +19,6 @@ class NotificationTableViewController: UITableViewController, DatabaseListener {
     
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
         
-        
     }
     var user = User()
     var channels = [Channel]()

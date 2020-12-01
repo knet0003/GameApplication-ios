@@ -167,9 +167,11 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         let playersnumber = Int(playersneeded) ?? 1
         if let game = databaseController?.addGameSession(game: gamename, sessionname: sessionname, playersneeded: playersnumber, latitude: latitude, longitude: longitude, sessiontime: sessionTime, sessionowner: user, gameimage: gameimage), game != nil {
               displayMessage(title: "Session Added", message: "You successfully created a session!")
+           // navigationController?.popViewController(animated: true)
         sessionNameTextField.text?.removeAll()
         gameNameLabel.text = "  "
         playersNeededLabel.text = "1"
+      //  sessionDatepicker.date = Date()
         locationMapView.removeAnnotation(annotation)
             navigationController?.popViewController(animated: true)
         }
