@@ -28,21 +28,44 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     var listenerType: ListenerType = .all
     var user = User()
     var gameSessions = [GameSession]()
+    var gameSessionIds = [String]()
     
     func onUserChange(change: DatabaseChange, users: [User]) {
         
     }
     
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
-        gameSessions.removeAll()
+
         let user = Auth.auth().currentUser?.uid
-        
-        for game in games {
-            gameSessions.append(game)
-        }
         let currentUser  = databaseController?.getUserByID(user!)
         let userlat = currentUser?.latitude
         let userlong = currentUser?.longitude
+            for game in games{
+                if gameSessionIds.contains(game.sessionid!) == false{
+                    let coordinate1 = CLLocation(latitude: userlat!, longitude: userlong!)
+                    let coordinate2 = CLLocation(latitude: game.latitude!, longitude: game.longitude!)
+                    let distanceInKms = coordinate1.distance(from: coordinate2)/1000
+                    if distanceInKms <= 100 {
+                        let alert = UIAlertController(title: "New Game", message:
+                                                        game.gamename! + " " + game.sessionname!, preferredStyle:
+                            UIAlertController.Style.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style:
+                            UIAlertAction.Style.default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        databaseController?.database.collection("notifications").addDocument(data: ["Title": "New Game", "gameid": game.sessionid!,"uid": user ])
+                    }
+                }
+            }
+        gameSessions.removeAll()
+        gameSessionIds.removeAll()
+        
+        
+        for game in games {
+            gameSessions.append(game)
+            gameSessionIds.append(game.sessionid!)
+        }
+        
+        
         gameSessions = gameSessions.sorted(){
             let coordinate1 = CLLocation(latitude: userlat!, longitude: userlong!)
             let coordinate2 = CLLocation(latitude: $0.latitude!, longitude: $0.longitude!)

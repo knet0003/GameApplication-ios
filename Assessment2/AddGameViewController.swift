@@ -57,6 +57,11 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
     let annotation = MKPointAnnotation()
 
     override func viewDidLoad() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .darkGray
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.green, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 24)]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
         super.viewDidLoad()
         saveButton.layer.cornerRadius = 5;
         selectGameButton.layer.cornerRadius = 5;

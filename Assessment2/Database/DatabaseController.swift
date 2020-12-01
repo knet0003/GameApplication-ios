@@ -195,7 +195,7 @@ class DatabaseController: NSObject, DatabaseProtocol {
             gameSession.longitude = change.document.data()["longitude"] as? Double
             gameSession.latitude = change.document.data()["latitude"] as? Double
             gameSession.playersneeded = change.document.data()["playersneeded"] as? Int
-            gameSession.sessionid = change.document.data()["sessionid"] as? String
+            gameSession.sessionid = change.document.documentID as? String
                 
          //   } catch {
           //      print("Unable to decode gamesession. Is the gamesession malformed?")
