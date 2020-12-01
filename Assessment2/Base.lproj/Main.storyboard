@@ -226,13 +226,11 @@
                             </tableViewCell>
                         </prototypes>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Notifications" image="bell.fill" catalog="system" selectedImage="bell.fill" id="0WJ-BM-cgy">
-                        <color key="badgeColor" red="0.18828965540000001" green="0.90564281089999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </tabBarItem>
+                    <navigationItem key="navigationItem" title="Notifications" id="bxW-MF-i3Z"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kvM-TP-mE2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="390" y="4069"/>
+            <point key="canvasLocation" x="1297.1014492753625" y="4068.7500000000005"/>
         </scene>
         <!--Home-->
         <scene sceneID="pCM-Ms-fVx">
@@ -839,7 +837,7 @@
                     <connections>
                         <segue destination="gZj-gg-2Wc" kind="relationship" relationship="viewControllers" id="H1O-rh-P3Z"/>
                         <segue destination="EUi-gY-JwD" kind="relationship" relationship="viewControllers" id="nVe-z4-8yk"/>
-                        <segue destination="YMP-XY-cdu" kind="relationship" relationship="viewControllers" id="tNk-L9-isf"/>
+                        <segue destination="OFh-DJ-sAk" kind="relationship" relationship="viewControllers" id="tNk-L9-isf"/>
                         <segue destination="vTK-uh-1Kp" kind="relationship" relationship="viewControllers" id="jTw-2H-B76"/>
                     </connections>
                 </tabBarController>
@@ -1506,7 +1504,28 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vB-Cc-SCH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1438" y="3981"/>
+            <point key="canvasLocation" x="2344.9275362318845" y="3980.7065217391309"/>
+        </scene>
+        <!--Notifications-->
+        <scene sceneID="ejH-YH-4V3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OFh-DJ-sAk" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Notifications" image="bell.fill" catalog="system" selectedImage="bell.fill" id="0WJ-BM-cgy">
+                        <color key="badgeColor" red="0.18828965540000001" green="0.90564281089999998" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Vmn-Of-1t7">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YMP-XY-cdu" kind="relationship" relationship="rootViewController" id="hMQ-uw-sdm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dsz-yQ-0yh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="389.85507246376812" y="4068.7500000000005"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
