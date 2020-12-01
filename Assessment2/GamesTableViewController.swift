@@ -53,7 +53,11 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .darkGray
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.green, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 24)]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          databaseController = appDelegate.databaseController
         gameSessions = databaseController!.gamesessionList
@@ -64,6 +68,10 @@ class GamesTableViewController: UITableViewController, DatabaseListener, UISearc
                 navigationItem.searchController = searchController
                 definesPresentationContext = true
                 tableView.tableFooterView = UIView()
+//        let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
+        let searchField = searchController.searchBar.searchTextField
+        searchField.backgroundColor = .systemBackground
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
 
             
         // Uncomment the following line to preserve selection between presentations

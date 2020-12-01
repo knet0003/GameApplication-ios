@@ -24,11 +24,20 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
     weak var databaseController: DatabaseController?
 
     override func viewDidLoad() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .darkGray
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.green, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 24)]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
         super.viewDidLoad()
         let searchController = UISearchController(searchResultsController: nil)
                 searchController.searchResultsUpdater = self
                 searchController.obscuresBackgroundDuringPresentation = false
                 searchController.searchBar.placeholder = "Search Game sessions"
+        let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
+
+        textFieldInsideSearchBar?.textColor = UIColor.white
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
                 navigationItem.searchController = searchController
                 definesPresentationContext = true
                 tableView.tableFooterView = UIView()

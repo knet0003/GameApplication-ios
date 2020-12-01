@@ -11,12 +11,14 @@ import CoreLocation
 import FirebaseFirestore
 import FirebaseAuth
 
-class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListener, UITextFieldDelegate {
+class GameInfoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, DatabaseListener, UITextFieldDelegate {
     var listenerType: ListenerType = .all
-    
+    var button_defaultmode: String = "edit"
+    var lat: Double = 0
+    var long: Double = 0
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var gameNameLabel: UILabel!
-    @IBOutlet weak var sessionNameLabel: UILabel!
     @IBOutlet weak var gameOwnerLabel: UILabel!
     @IBOutlet weak var playersLabel: UILabel!
     @IBOutlet weak var sessionTimeLabel: UILabel!
@@ -36,20 +38,30 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
     var gameSession: GameSession?
     let db = Firestore.firestore()
     var annotation = CLLocationCoordinate2D()
-    var userList: [User] = []
+    var userList = [User]()
     
     @IBOutlet weak var stepper: UIStepper!
     override func viewDidLoad() {
+        let appearance = UINavigationBarAppearance()
+        appearance.backgroundColor = .darkGray
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.green, NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 24)]
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
         super.viewDidLoad()
+        joinUsersTable.delegate = self;
+        joinUsersTable.dataSource = self;
+        joinUsersTable.tableFooterView = UIView(frame: .zero)
+//        scrollView.contentSize = CGSizeMake(self.view.frame.width, self.view.frame.height+100)
         joinButton.layer.cornerRadius = 5;
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         sessionNameTextField.delegate = self
         databaseController = appDelegate.databaseController
-        sessionNameTextField.isHidden = true
+        sessionNameTextField.borderStyle = .none
+        sessionNameTextField.isUserInteractionEnabled = false
         stepper.isHidden = true
         sessionTimeDatepicker.isHidden = true
         gameNameLabel.text = gameSession?.gamename
-        sessionNameLabel.text = gameSession?.sessionname
+        sessionNameTextField.text = gameSession?.sessionname
         playersLabel.text = String((gameSession?.playersneeded)!)
         
         let dateFormatter = DateFormatter()
@@ -61,6 +73,8 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
         
         let userlat = databaseController?.getUserByID(currentuserid!)?.latitude
         let userlong = databaseController?.getUserByID(currentuserid!)?.longitude
+        lat = userlat!
+        long = userlong!
         let ownername = databaseController?.getUserByID((gameSession?.sessionowner)!)!.name
         gameOwnerLabel.text = ownername
         if currentuserid == gameSession?.sessionowner {
@@ -70,13 +84,19 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
         } else {
             joinButton.isHidden = false
             editButton.isEnabled = false
+            editButton.title = ""
         }
+        if gameSession?.players?.contains(currentuserid!) == true{
+            joinButton.isHidden = true
+        }
+        userList.append((self.databaseController?.getUserByID((gameSession?.sessionowner)!))!)
         if gameSession?.players?.count != nil {
             let players = gameSession?.players
             for player in players! {
                 userList.append((self.databaseController?.getUserByID(player))!)
             }
         }
+        self.joinUsersTable.reloadData()
         //let userlong = UserDefaults.standard.double(forKey: "Long")
         let userLocation = CLLocationCoordinate2DMake(userlat!, userlong!)
        // annotation = userLocation
@@ -107,9 +127,13 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
     }
       
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "playerscell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "playersCell", for: indexPath)
         let user = userList[indexPath.row]
+        print(user)
+        cell.textLabel?.textColor = UIColor.green
+        cell.detailTextLabel?.textColor = UIColor.white
         cell.textLabel?.text = user.name
+        cell.detailTextLabel?.text = user.email
         return cell
       }
     
@@ -146,11 +170,53 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
     }
     
     @IBAction func editDetails(_ sender: Any) {
-        sessionNameLabel.isHidden = true
-        sessionTimeLabel.isHidden = true
-        stepper.isHidden = false
-        sessionNameTextField.isHidden = false
-        sessionTimeDatepicker.isHidden = false
+        if button_defaultmode == "edit" {
+            button_defaultmode = "save"
+            sessionTimeLabel.isHidden = true
+            stepper.isHidden = false
+            sessionNameTextField.borderStyle = .roundedRect
+            sessionNameTextField.isUserInteractionEnabled = true
+            //UITextField *yourTextField = [[UITextField alloc]init];
+    //        CGFloat yourSelectedFontSize = 14.0 ;
+    //        UIFont *yourNewSameStyleFont = [sessionNameTextField.font fontWithSize:yourSelectedFontSize];
+    //        sessionNameTextField.font = yourNewSameStyleFont ;
+            sessionNameTextField.font =  UIFont.init(name: (sessionNameTextField.font?.fontName)!, size: 14.0)
+            sessionTimeDatepicker.isHidden = false
+            editButton.title = "Done"
+        }
+        else {
+            let sessionid: String = (gameSession?.sessionid)!
+            if let text = sessionNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
+                db.collection("games").document(sessionid).updateData(["sessionname": text])
+                sessionNameTextField.borderStyle = .none
+                sessionNameTextField.isUserInteractionEnabled = false
+                view.endEditing(true)
+            }
+            
+            db.collection("games").document(sessionid).updateData(["latitude": lat, "longitude": long])
+            guard let playersneeded = playersLabel.text else {
+                displayMessage(title: "No player number", message: "Please add how many players you need")
+                 return
+            }
+            let playersnumber = Int(playersneeded) ?? 1
+            db.collection("games").document(sessionid).updateData(["playersneeded": playersnumber])
+            let sessionTime = sessionTimeDatepicker.date
+            db.collection("games").document(sessionid).updateData(["sessiontime": sessionTime])
+            button_defaultmode = "edit"
+            sessionTimeLabel.isHidden = false
+            stepper.isHidden = true
+            sessionNameTextField.borderStyle = .none
+            sessionNameTextField.isUserInteractionEnabled = false
+            //UITextField *yourTextField = [[UITextField alloc]init];
+    //        CGFloat yourSelectedFontSize = 14.0 ;
+    //        UIFont *yourNewSameStyleFont = [sessionNameTextField.font fontWithSize:yourSelectedFontSize];
+    //        sessionNameTextField.font = yourNewSameStyleFont ;
+            sessionNameTextField.font =  UIFont.init(name: (sessionNameTextField.font?.fontName)!, size: 17.0)
+            sessionTimeDatepicker.isHidden = true
+            editButton.title = "Edit"
+            //navigationController?.popViewController(animated: true)
+        }
+        
         
         
     }
@@ -161,14 +227,7 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let text = sessionNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
-            sessionNameLabel.text = text
-            let sessionid: String = (gameSession?.sessionid)!
-            db.collection("games").document(sessionid).updateData(["sessionname": text])
-            sessionNameTextField.isHidden = true
-            sessionNameLabel.isHidden = false
         view.endEditing(true)
-    }
     }
     
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -209,10 +268,9 @@ class GameInfoViewController: UIViewController, MKMapViewDelegate, DatabaseListe
             }
             showRouteOnMap(pickupCoordinate: userlocation, destinationCoordinate: newSessionLocation)
             
-            let lat = Double(newSessionLocation.latitude)
-            let long = Double(newSessionLocation.longitude)
-            let sessionid: String = (gameSession?.sessionid)!
-            db.collection("games").document(sessionid).updateData(["latitude": lat, "longitude": long])
+            lat = Double(newSessionLocation.latitude)
+            long = Double(newSessionLocation.longitude)
+            
                 }
         }
             }
