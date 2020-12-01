@@ -32,6 +32,9 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
          searchController.searchBar.delegate = self
          searchController.obscuresBackgroundDuringPresentation = false
          searchController.searchBar.placeholder = "Search for game"
+        let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
+
+        textFieldInsideSearchBar?.textColor = UIColor.white
         
         navigationItem.searchController = searchController
          navigationItem.hidesSearchBarWhenScrolling = false

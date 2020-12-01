@@ -173,6 +173,7 @@ class AddGameViewController: UIViewController, MKMapViewDelegate, UIGestureRecog
         playersNeededLabel.text = "1"
       //  sessionDatepicker.date = Date()
         locationMapView.removeAnnotation(annotation)
+            navigationController?.popViewController(animated: true)
         }
     }
     
