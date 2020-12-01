@@ -434,7 +434,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="ceX-dq-8E8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2Lj-ay-2ap">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="2Lj-ay-2ap">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="editFields:" destination="3bb-8y-axJ" id="qat-jn-ysr"/>
@@ -443,6 +443,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="ageLabel" destination="9ac-4e-zyZ" id="11P-VY-vUg"/>
+                        <outlet property="editButton" destination="2Lj-ay-2ap" id="Gdb-1n-HDP"/>
                         <outlet property="emailLabel" destination="VSn-eN-Qjh" id="UuN-aQ-tNj"/>
                         <outlet property="locationMapView" destination="hbU-n5-w2T" id="oww-YH-3Hd"/>
                         <outlet property="logOutButton" destination="6Nw-3J-TaS" id="FL3-BZ-Aq2"/>
