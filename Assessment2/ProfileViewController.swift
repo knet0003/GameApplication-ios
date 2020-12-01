@@ -28,6 +28,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     
     
     
+    @IBOutlet weak var editButton: UIBarButtonItem!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
@@ -36,14 +37,36 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     var channelsRef: CollectionReference?
     let annotation = MKPointAnnotation()
     var user = User()
+    var lat : Double = 0
+    var long : Double = 0
     let db = Firestore.firestore()
     weak var databaseController: DatabaseController?
+    var button_defaultmode: String = "edit"
     @IBOutlet weak var logOutButton: UIButton!
     
     @IBAction func editFields(_ sender: Any) {
-        nameLabel.isHidden = true
-        nameTextField.isHidden = false
-        nameTextField.text = nameLabel.text
+        if button_defaultmode == "edit" {
+            button_defaultmode = "save"
+            nameLabel.isHidden = true
+            nameTextField.isHidden = false
+            nameTextField.text = nameLabel.text
+            editButton.title = "Save"
+            
+        }
+        else {
+            if let text = nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
+                nameLabel.text = text
+                let user = Auth.auth().currentUser
+                db.collection("users").document(user!.uid).updateData(["name": text])
+                UserDefaults.standard.set(text, forKey: "Name")
+                nameTextField.isHidden = true
+                nameLabel.isHidden = false
+                db.collection("users").document(user!.uid).updateData(["latitude": lat, "longitude": long])
+                button_defaultmode = "edit"
+                editButton.title = "Edit"
+                
+            }
+        }
     }
     
     
@@ -56,8 +79,6 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         var dob: Date?
-        var lat: Double?
-        var long: Double?
         super.viewDidLoad()
         nameTextField.delegate = self
         nameTextField.isHidden = true
@@ -71,8 +92,8 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         user  = (databaseController?.getUserByID(currentuser!.uid))!
         nameLabel.text = user.name
         dob = user.DoB
-        lat = user.latitude
-        long = user.longitude
+        lat = user.latitude!
+        long = user.longitude!
         let today = Date()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day], from: dob!, to: today)
@@ -81,7 +102,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         ageLabel.text = String(ageYears!)
         ageLabel.text?.append(" Years")
         
-        let newSelectedCoordinates = CLLocationCoordinate2D(latitude: lat!, longitude: long!)
+        let newSelectedCoordinates = CLLocationCoordinate2D(latitude: lat, longitude: long)
         annotation.coordinate = newSelectedCoordinates
         let allPreviosAnnotation = locationMapView.annotations
         locationMapView.removeAnnotations(allPreviosAnnotation)
@@ -98,16 +119,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let text = nameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
-            nameLabel.text = text
-            let user = Auth.auth().currentUser
-            db.collection("users").document(user!.uid).updateData(["name": text])
-            UserDefaults.standard.set(text, forKey: "Name")
-            nameTextField.isHidden = true
-            nameLabel.isHidden = false
-            view.endEditing(true)
-            
-        }
+        view.endEditing(true)
     }
     
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -126,17 +138,18 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     }
     
     @IBAction func addAnnotationOnLongPress(gesture: UILongPressGestureRecognizer) {
-        self.locationMapView.removeAnnotation(annotation)
-        if gesture.state == .ended {
-            let point = gesture.location(in: self.locationMapView)
-            let coordinate = self.locationMapView.convert(point, toCoordinateFrom: self.locationMapView)
-            annotation.coordinate = coordinate
-            self.locationMapView.addAnnotation(annotation)
-            let lat = Double(annotation.coordinate.latitude)
-            let long = Double(annotation.coordinate.longitude)
-            let user = Auth.auth().currentUser
-            db.collection("users").document(user!.uid).updateData(["latitude": lat, "longitude": long])
-            
+        if button_defaultmode == "save"{
+            self.locationMapView.removeAnnotation(annotation)
+            if gesture.state == .ended {
+                let point = gesture.location(in: self.locationMapView)
+                let coordinate = self.locationMapView.convert(point, toCoordinateFrom: self.locationMapView)
+                annotation.coordinate = coordinate
+                self.locationMapView.addAnnotation(annotation)
+                lat = Double(annotation.coordinate.latitude)
+                long = Double(annotation.coordinate.longitude)
+                
+                
+            }
         }
     }
     
