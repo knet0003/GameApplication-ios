@@ -30,6 +30,8 @@ class SignInViewController: UIViewController {
         settings.isPersistenceEnabled = true
         database.settings = settings
         SignInButton.layer.cornerRadius = 5;
+        emailTextField.layer.cornerRadius = 5;
+        passwordTextField.layer.cornerRadius = 5;
         channelsRef = database.collection("users")
         handle = Auth.auth().addStateDidChangeListener( { (auth, user) in
                                                             if user != nil {
