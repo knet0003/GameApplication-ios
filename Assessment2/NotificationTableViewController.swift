@@ -67,7 +67,7 @@ class NotificationTableViewController: UITableViewController, DatabaseListener {
                     let time = snapshot["time"] as! Timestamp?
                     let date = time?.dateValue()
                     let game = self.databaseController?.getGameByID(snapshot["gameid"] as! String)
-                    let channel = Notification(id: id as! String, name: (game?.sessionname!)!, date: date!)
+                    let channel = Notification(id: id as! String, name: (game?.sessionname!)!, date: date ?? Date())
                     self.channels.append(channel)
                 }
             })
