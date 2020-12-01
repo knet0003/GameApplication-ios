@@ -102,7 +102,6 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
         dateFormatter.dateFormat = "hh:mm dd-MM-yyyy"
         let sessiontime = dateFormatter.string(from: currentCell.sessiontime!)
         cell.sessionTimeLabel.text = "Time: " + sessiontime
-      //  cell.gameImage.image = 
         return cell
     }
     

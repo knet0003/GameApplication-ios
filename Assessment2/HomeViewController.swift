@@ -52,8 +52,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             return distanceInMeters1 < distanceInMeters2;
         }
         gamesTable.reloadData()
-        
-    }
+            
+        }
     
 
     @IBOutlet weak var gamesTable: UITableView!
