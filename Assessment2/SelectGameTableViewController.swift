@@ -24,7 +24,7 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
     var images: [UIImage] = []
     
     weak var delegate: AddGameDelegate?
-
+    
     override func viewDidLoad() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .darkGray
@@ -34,62 +34,62 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
         super.viewDidLoad()
         
         let searchController = UISearchController(searchResultsController: nil)
-         searchController.searchBar.delegate = self
-         searchController.obscuresBackgroundDuringPresentation = false
-         searchController.searchBar.placeholder = "Search for game"
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search for game"
         let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
-
+        
         textFieldInsideSearchBar?.textColor = UIColor.white
         
         navigationItem.searchController = searchController
-         navigationItem.hidesSearchBarWhenScrolling = false
-         definesPresentationContext = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
         
         indicator.style = UIActivityIndicatorView.Style.medium
-         indicator.center = self.tableView.center
-         self.view.addSubview(indicator)
+        indicator.center = self.tableView.center
+        self.view.addSubview(indicator)
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return apiGames.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gameCell", for: indexPath) as! SelectGameTableViewCell
-
+        
         let game = apiGames[indexPath.row]
         cell.gameNameLabel?.text = game.name
         let imageUrl = URL(string: game.imageURL!)!
         cell.gameImage.load(url: imageUrl)
-
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt
-        indexPath: IndexPath) {
+                                indexPath: IndexPath) {
         let game = apiGames[indexPath.row]
         let _ = delegate?.onGameAdded(selectedGame: game)
         navigationController?.popViewController(animated: true)
     }
-
+    
     
     // MARK: - Search Bar Delegate
-
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, searchText.count > 0 else {
             return;
         }
-
+        
         indicator.startAnimating()
         indicator.backgroundColor = UIColor.clear
-
+        
         apiGames.removeAll()
         imageURLs.removeAll()
         images.removeAll()
@@ -101,7 +101,7 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
     }
     
     // MARK: - Web Request
-
+    
     func requestGames(gameName: String){
         var searchURLComponents = URLComponents()
         searchURLComponents.scheme = "https"
@@ -109,7 +109,7 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
         searchURLComponents.path = "/api/search"
         searchURLComponents.queryItems = [
             URLQueryItem(name: "name", value: gameName),
-        URLQueryItem(name: "client_id", value: "JLBr5npPhV"),
+            URLQueryItem(name: "client_id", value: "JLBr5npPhV"),
             URLQueryItem(name: "limit", value: "15")]
         let jsonURL = searchURLComponents.url
         let task = URLSession.shared.dataTask(with: jsonURL!) { (data, response, error) in
@@ -117,12 +117,12 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
                 self.indicator.stopAnimating()
                 self.indicator.hidesWhenStopped = true
             }
-
+            
             if let error = error {
                 print(error)
                 return
             }
-
+            
             do {
                 let decoder = JSONDecoder()
                 let volumeData = try decoder.decode(VolumeData.self, from: data!)
@@ -134,11 +134,11 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
                     self.apiGames.append(contentsOf: games)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
-                        }
-
+                    }
+                    
                 }
-        } catch let err {
-            print(err)
+            } catch let err {
+                print(err)
             }
         }
         task.resume()
@@ -147,24 +147,24 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
     
     func displayMessage(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message,
-        preferredStyle: UIAlertController.Style.alert)
+                                                preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss",
-        style: UIAlertAction.Style.default,handler: nil))
+                                                style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
-  
+    
 }
 extension UIImageView {
-     func load(url: URL) {
-         DispatchQueue.global().async { [weak self] in
-             if let data = try? Data(contentsOf: url) {
-                 if let image = UIImage(data: data) {
-                     DispatchQueue.main.async {
-                         self?.image = image
-                     }
-                 }
-             }
-         }
-     }
-
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+    
 }

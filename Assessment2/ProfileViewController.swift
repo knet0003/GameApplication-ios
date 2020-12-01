@@ -54,7 +54,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-         databaseController = appDelegate.databaseController
+        databaseController = appDelegate.databaseController
         var dob: Date?
         var lat: Double?
         var long: Double?
@@ -76,7 +76,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         let today = Date()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day], from: dob!, to: today)
-
+        
         let ageYears = components.year
         ageLabel.text = String(ageYears!)
         ageLabel.text?.append(" Years")
@@ -91,10 +91,10 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
         self.locationMapView.setRegion(region, animated: true)
         
     }
-
+    
     func textFieldShouldReturn(userText: UITextField) -> Bool {
-            userText.resignFirstResponder()
-            return true
+        userText.resignFirstResponder()
+        return true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -105,9 +105,9 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
             UserDefaults.standard.set(text, forKey: "Name")
             nameTextField.isHidden = true
             nameLabel.isHidden = false
-        view.endEditing(true)
-        
-    }
+            view.endEditing(true)
+            
+        }
     }
     
     func textField(_ textFieldToChange: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -122,7 +122,7 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
             let lengthToReplace = range.length
             newLength = startingLength + lengthToAdd - lengthToReplace
         }
-      return newLength > characterCountLimit
+        return newLength > characterCountLimit
     }
     
     @IBAction func addAnnotationOnLongPress(gesture: UILongPressGestureRecognizer) {
@@ -137,8 +137,8 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
             let user = Auth.auth().currentUser
             db.collection("users").document(user!.uid).updateData(["latitude": lat, "longitude": long])
             
-                }
-            }
+        }
+    }
     
     
     @IBAction func logOut(_ sender: Any) {
@@ -153,9 +153,9 @@ class ProfileViewController: UIViewController,MKMapViewDelegate, UITextFieldDele
     
     func displayMessage(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message,
-        preferredStyle: UIAlertController.Style.alert)
+                                                preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss",
-        style: UIAlertAction.Style.default,handler: nil))
+                                                style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     

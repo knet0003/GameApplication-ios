@@ -12,7 +12,7 @@ import Firebase
 import FirebaseFirestore
 
 class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate {
-
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
@@ -25,8 +25,8 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     static let DEFAULT_MAP_LAT = -37.830531
     static let DEFAULT_MAP_LON = 144.981197
     let annotation = MKPointAnnotation()
-//    @IBOutlet weak var showPassImage: UIImageView!
-//    var iconClick = true
+    //    @IBOutlet weak var showPassImage: UIImageView!
+    //    var iconClick = true
     
     override func viewDidLoad() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -54,12 +54,12 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         passwordTextField.delegate = self
         DoBDatePicker.maximumDate = Date()
         // Do any additional setup after loading the view.
-//        let tapGesture = UITapGestureRecognizer(target: self, action: Selector(("imageTapped:")))
-//
-//            // add it to the image view;
-//        showPassImage.addGestureRecognizer(tapGesture)
-//            // make sure imageView can be interacted with by user
-//        showPassImage.isUserInteractionEnabled = true
+        //        let tapGesture = UITapGestureRecognizer(target: self, action: Selector(("imageTapped:")))
+        //
+        //            // add it to the image view;
+        //        showPassImage.addGestureRecognizer(tapGesture)
+        //            // make sure imageView can be interacted with by user
+        //        showPassImage.isUserInteractionEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,7 +74,7 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     
     // MARK: - CLLocationManager delegate methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations
-        locations: [CLLocation]) {
+                            locations: [CLLocation]) {
         if let location = locations.last {
             if currentLocation == nil{
                 let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
@@ -115,19 +115,19 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
     }
     
     @IBAction func TapGestureBegan(_ sender: UITapGestureRecognizer) {
-            if sender.state == .ended {
-                let locationView = sender.location(in: locationMapView)
-                let tappedView = locationMapView.convert(locationView, toCoordinateFrom: locationMapView)
-                let newSelectedCoordinates = CLLocationCoordinate2D(latitude: tappedView.latitude, longitude: tappedView.longitude)
-                annotation.coordinate = newSelectedCoordinates
-                let allPreviosAnnotation = locationMapView.annotations
-                locationMapView.removeAnnotations(allPreviosAnnotation)
-                locationMapView.addAnnotation(annotation)
-                currentLocation = newSelectedCoordinates
-                let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-                let region = MKCoordinateRegion(center: currentLocation!, span: span)
-                self.locationMapView.setRegion(region, animated: true)
-            }
+        if sender.state == .ended {
+            let locationView = sender.location(in: locationMapView)
+            let tappedView = locationMapView.convert(locationView, toCoordinateFrom: locationMapView)
+            let newSelectedCoordinates = CLLocationCoordinate2D(latitude: tappedView.latitude, longitude: tappedView.longitude)
+            annotation.coordinate = newSelectedCoordinates
+            let allPreviosAnnotation = locationMapView.annotations
+            locationMapView.removeAnnotations(allPreviosAnnotation)
+            locationMapView.addAnnotation(annotation)
+            currentLocation = newSelectedCoordinates
+            let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+            let region = MKCoordinateRegion(center: currentLocation!, span: span)
+            self.locationMapView.setRegion(region, animated: true)
+        }
     }
     
     @IBAction func register(_ sender: UIButton) {
@@ -145,13 +145,13 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
             }
             else{
                 databaseController?.addUser(uid: (user?.user.uid)!, name: name, latitude: self.annotation.coordinate.latitude, longitude: self.annotation.coordinate.longitude, DoB: Dob, email: email)
-               /* let db = Firestore.firestore()
-               // db.collection("users").document(user!.user.uid).setData([
-                                                            "name": name,
-                                                            "DoB": Dob,
-                                                            "latitude": self.currentLocation!.latitude as Double,
-                                                            "longitude": self.currentLocation!.longitude as Double,
-                                                            "uid": user!.user.uid]) */
+                /* let db = Firestore.firestore()
+                 // db.collection("users").document(user!.user.uid).setData([
+                 "name": name,
+                 "DoB": Dob,
+                 "latitude": self.currentLocation!.latitude as Double,
+                 "longitude": self.currentLocation!.longitude as Double,
+                 "uid": user!.user.uid]) */
                 self.navigationController?.popViewController(animated: true)
                 performSegue(withIdentifier: "backToSignin", sender: self)
             }
@@ -166,5 +166,5 @@ class RegisterViewController: UIViewController, MKMapViewDelegate, UITextFieldDe
         
     }
     
-
+    
 }

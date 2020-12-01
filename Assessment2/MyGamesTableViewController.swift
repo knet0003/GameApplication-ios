@@ -23,7 +23,7 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
     var filteredGameSessions: [GameSession] = []
     var newGameSessions = [GameSession]()
     weak var databaseController: DatabaseController?
-
+    
     override func viewDidLoad() {
         let appearance = UINavigationBarAppearance()
         appearance.backgroundColor = .darkGray
@@ -32,23 +32,23 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
         navigationItem.scrollEdgeAppearance = appearance
         super.viewDidLoad()
         let searchController = UISearchController(searchResultsController: nil)
-                searchController.searchResultsUpdater = self
-                searchController.obscuresBackgroundDuringPresentation = false
-                searchController.searchBar.placeholder = "Search Game sessions"
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Game sessions"
         let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
-
+        
         textFieldInsideSearchBar?.textColor = UIColor.white
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-                navigationItem.searchController = searchController
-                definesPresentationContext = true
-                tableView.tableFooterView = UIView()
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        tableView.tableFooterView = UIView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         databaseController?.addListener(listener: self)
-       // loadAllGames()
+        // loadAllGames()
     }
     override func viewWillDisappear(_ animated: Bool) {
         databaseController?.removeListener(listener: self)
@@ -59,64 +59,69 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
     func loadAllGames() {
         let allgames = databaseController!.gamesessionList
         let user = Auth.auth().currentUser?.uid
+        let date = Date()
         for game in allgames {
-            if game.sessionowner == user {
-                gameSessions.append(game)
-                if newGameSessions.contains(game) == false{
-                    newGameSessions.append(game)
-                    let dateFormatter = DateFormatter()
-                    let date = Date()
-                    dateFormatter.dateFormat = "dd-MM-yyyy"
-                    let currentDate = dateFormatter.string(from: date)
-                    let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
-                    if currentDate == sessionDate {
-                        let alert = UIAlertController(title: "Game Today", message:
-                                                        game.gamename! + " " + game.sessionname!, preferredStyle:
-                            UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style:
-                            UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                        databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+            if date < game.sessiontime! as Date{
+                if game.sessionowner == user {
+                    gameSessions.append(game)
+                    if newGameSessions.contains(game) == false{
+                        newGameSessions.append(game)
+                        let dateFormatter = DateFormatter()
+                        
+                        dateFormatter.dateFormat = "dd-MM-yyyy"
+                        let currentDate = dateFormatter.string(from: date)
+                        let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
+                        if currentDate == sessionDate {
+                            let alert = UIAlertController(title: "Game Today", message:
+                                                            game.gamename! + " " + game.sessionname!, preferredStyle:
+                                                                UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style:
+                                                            UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+                        }
                     }
                 }
-            }
-            else if game.players?.contains(user!) == true {
-                gameSessions.append(game)
-                if newGameSessions.contains(game) == false{
-                    newGameSessions.append(game)
-                    let dateFormatter = DateFormatter()
-                    let date = Date()
-                    dateFormatter.dateFormat = "dd-MM-yyyy"
-                    let currentDate = dateFormatter.string(from: date)
-                    let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
-                    if currentDate == sessionDate {
-                        let alert = UIAlertController(title: "Game Today", message:
-                                                        game.gamename! + " " + game.sessionname!, preferredStyle:
-                            UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style:
-                            UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                        databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+                else if game.players?.contains(user!) == true {
+                    gameSessions.append(game)
+                    if newGameSessions.contains(game) == false{
+                        newGameSessions.append(game)
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd-MM-yyyy"
+                        let currentDate = dateFormatter.string(from: date)
+                        let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
+                        if currentDate == sessionDate {
+                            let alert = UIAlertController(title: "Game Today", message:
+                                                            game.gamename! + " " + game.sessionname!, preferredStyle:
+                                                                UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style:
+                                                            UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+                        }
                     }
                 }
             }
         }
         filteredGameSessions = gameSessions
+        filteredGameSessions = filteredGameSessions.sorted(){
+            return $0.sessiontime! < $1.sessiontime!;
+        }
         self.tableView.reloadData()
     }
-
     
-
+    
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredGameSessions.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "gameCell", for: indexPath) as! GamesTableViewCell
         let currentCell = filteredGameSessions[indexPath.row]
@@ -137,7 +142,7 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
         dateFormatter.dateFormat = "hh:mm dd-MM-yyyy"
         let sessiontime = dateFormatter.string(from: currentCell.sessiontime!)
         cell.sessionTimeLabel.text = "Time: " + sessiontime
-      //  cell.gameImage.image = 
+        //  cell.gameImage.image =
         return cell
     }
     
@@ -151,45 +156,46 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
     func onGameListChange(change: DatabaseChange, games: [GameSession]) {
         let allgames = databaseController!.gamesessionList
         let user = Auth.auth().currentUser?.uid
+        let date = Date()
         for game in allgames {
-            if game.sessionowner == user {
-                gameSessions.append(game)
-                if newGameSessions.contains(game) == false{
-                    newGameSessions.append(game)
-                    let dateFormatter = DateFormatter()
-                    let date = Date()
-                    dateFormatter.dateFormat = "dd-MM-yyyy"
-                    let currentDate = dateFormatter.string(from: date)
-                    let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
-                    if currentDate == sessionDate {
-                        let alert = UIAlertController(title: "Game Today", message:
-                                                        game.gamename! + " " + game.sessionname!, preferredStyle:
-                            UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style:
-                            UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                        databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+            if date < game.sessiontime! as Date{
+                if game.sessionowner == user {
+                    gameSessions.append(game)
+                    if newGameSessions.contains(game) == false{
+                        newGameSessions.append(game)
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd-MM-yyyy"
+                        let currentDate = dateFormatter.string(from: date)
+                        let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
+                        if currentDate == sessionDate {
+                            let alert = UIAlertController(title: "Game Today", message:
+                                                            game.gamename! + " " + game.sessionname!, preferredStyle:
+                                                                UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style:
+                                                            UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+                        }
                     }
+                    
                 }
-   
-            }
-            else if game.players?.contains(user!) == true {
-                gameSessions.append(game)
-                if newGameSessions.contains(game) == false{
-                    newGameSessions.append(game)
-                    let dateFormatter = DateFormatter()
-                    let date = Date()
-                    dateFormatter.dateFormat = "dd-MM-yyyy"
-                    let currentDate = dateFormatter.string(from: date)
-                    let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
-                    if currentDate == sessionDate {
-                        let alert = UIAlertController(title: "Game Today", message:
-                                                        game.gamename! + " " + game.sessionname!, preferredStyle:
-                            UIAlertController.Style.alert)
-                        alert.addAction(UIAlertAction(title: "Ok", style:
-                            UIAlertAction.Style.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                        databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+                else if game.players?.contains(user!) == true {
+                    gameSessions.append(game)
+                    if newGameSessions.contains(game) == false{
+                        newGameSessions.append(game)
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd-MM-yyyy"
+                        let currentDate = dateFormatter.string(from: date)
+                        let sessionDate = dateFormatter.string(from: game.sessiontime! as Date)
+                        if currentDate == sessionDate {
+                            let alert = UIAlertController(title: "Game Today", message:
+                                                            game.gamename! + " " + game.sessionname!, preferredStyle:
+                                                                UIAlertController.Style.alert)
+                            alert.addAction(UIAlertAction(title: "Ok", style:
+                                                            UIAlertAction.Style.default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                            databaseController?.database.collection("notifications").addDocument(data: ["Title": "Game Today", "gameid": game.sessionid!,"uid": user , "time" : date])
+                        }
                     }
                 }
             }
@@ -199,32 +205,32 @@ class MyGamesTableViewController: UITableViewController, UISearchResultsUpdating
     }
     
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showGameInfo" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                        let controller = segue.destination as! GameInfoViewController
-                    controller.gameSession = filteredGameSessions[indexPath.row]
-                    }
+                let controller = segue.destination as! GameInfoViewController
+                controller.gameSession = filteredGameSessions[indexPath.row]
+            }
         }
     }
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text?.lowercased()
-                    else {
-                        return
-                }
-
-                if searchText.count > 0 {
-                    filteredGameSessions = gameSessions.filter({ (gameSession: GameSession) -> Bool in
-                        return (gameSession.gamename!.lowercased().contains(searchText.lowercased()) )
-                    })
-                }
-                else {
-                    filteredGameSessions = gameSessions
-                }
-                tableView.reloadData()
+        else {
+            return
+        }
+        
+        if searchText.count > 0 {
+            filteredGameSessions = gameSessions.filter({ (gameSession: GameSession) -> Bool in
+                return (gameSession.gamename!.lowercased().contains(searchText.lowercased()) )
+            })
+        }
+        else {
+            filteredGameSessions = gameSessions
+        }
+        tableView.reloadData()
     }
     
-
+    
 }
