@@ -116,12 +116,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         //self.currentSender = Sender(id: UserDefaults.standard.object(forKey: "Uid") as! String, name: UserDefaults.standard.string(forKey: "Name")!)
-        let currentauthuser = databaseController?.authController.currentUser
-        //print(currentauthuser?.uid)
-        user = (databaseController?.getUserByID(currentauthuser!.uid as String))!
-        //print(user.name)
-        let name = user.name
-        WelcomeLabel.text?.append(name!)
+        
         // Do any additional setup after loading the view.
     }
     
@@ -130,6 +125,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         databaseController?.addListener(listener: self)
+        let currentauthuser = databaseController?.authController.currentUser
+        //print(currentauthuser?.uid)
+        user = (databaseController?.getUserByID(currentauthuser!.uid as String))!
+        //print(user.name)
+        let name = user.name
+        WelcomeLabel.text = "Welcome back, " + name!
         // loadAllGames()
     }
     override func viewWillDisappear(_ animated: Bool) {
