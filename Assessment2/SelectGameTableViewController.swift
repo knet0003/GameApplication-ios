@@ -40,6 +40,8 @@ class SelectGameTableViewController: UITableViewController, UISearchBarDelegate 
         let textFieldInsideSearchBar = searchController.searchBar.value(forKey: "searchField") as? UITextField
         
         textFieldInsideSearchBar?.textColor = UIColor.white
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navigationItem.searchController = searchController
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
