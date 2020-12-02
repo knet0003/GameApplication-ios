@@ -41,8 +41,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let currentUser  = databaseController?.getUserByID(user!)
         let userlat = currentUser?.latitude
         let userlong = currentUser?.longitude
+        let date = Date()
         for game in games{
-            if game.sessionowner != user {
+            if game.sessionowner != user  && date < game.sessiontime! as Date {
                 if gameSessionIds.contains(game.sessionid!) == false{
                     let coordinate1 = CLLocation(latitude: userlat!, longitude: userlong!)
                     let coordinate2 = CLLocation(latitude: game.latitude!, longitude: game.longitude!)
@@ -73,11 +74,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         gameSessions.removeAll()
         gameSessionIds.removeAll()
         
-        
         for game in games {
-            gameSessions.append(game)
-            gameSessionIds.append(game.sessionid!)
+            if date < game.sessiontime! as Date{
+                if game.sessionowner != user {
+                    if game.players?.contains(user!) == false{
+                        gameSessions.append(game)
+                        gameSessionIds.append(game.sessionid!)
+                    }
+                }
+            }
         }
+    /*    for game in games {
+            gameSessions.append(game)
+          
+        } */
         
         
         gameSessions = gameSessions.sorted(){
