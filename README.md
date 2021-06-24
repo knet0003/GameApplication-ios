@@ -72,7 +72,9 @@ In the home page, the users can also click on the left of the navigation bar, wh
 On the messages tab, in the navigation bar users can see how many unread messages they have. They can also create a new message or click on any message to open the message history with the other user.
 In the notification tab, users can see all the notification they have received. Users get notifications if there are any join request to their game sessions or if their join requests have been accepted or rejected by the host.
 
+
 ![alt text](https://github.com/knet0003/Assessment2/blob/main/add_game.png)
+
 
 In the games tab, users can see all the games they are part of. These include game sessions that they created as well as the ones that they have joined. From here they have an option to create a new game session.
 In the add game tab users are asked to input details about the game session such as the name of the session, the number of players required, date and time and location.
